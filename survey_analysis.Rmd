@@ -1,0 +1,258 @@
+---
+title: "SIS User Survey"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+## What is this report?
+
+The Supports Intensity Scale (SIS®) is a standardized assessment tool implemented by the Michigan Department of Health and Human Services (MDHHS) for all Medicaid-eligible persons 18 and older who have intellectual or developmental disabilities (IDD) and who are currently receiving case management or supports coordination or respite-only services through the behavioral health system. Use of the tool began in July of 2014 and by September 30th of 2017 the intent is for all eligible individuals to have received an assessment.
+
+In anticipation of the completion of this initial implementation phase, MDHHS sought feedback from people receiving services and supports, their family members, advocates, prepaid inpatient health plan (PIHP) employees, community mental health (CMH) agencies and service providers regarding current and potential uses of the data from the SIS® assessment tool.
+
+This document is a summary of the feedback they received.
+
+## How people provided feedback
+
+### Focus Groups
+
+A series of focus groups were scheduled throughout the state for individuals with intellectual or developmental disabilities, their family members, and their Supports Coordinators/Case Managers. The purpose of these focus groups was to understand people's current use of data from the SIS® and to understand peoples feedback how the data might be used to inform the Person-Centered Planning process, ensuring that individuals receive supports and services according to their needs. Four focus groups were offered at locations throughout the state (*in Detroit, Petoskey, Kalamazoo, and Mount Pleasant*) to reach a broad audience and minimize travel time for attendees. 
+
+### Survey
+
+[A survey](https://www.surveymonkey.com/r/SIS_USER_EXPERIENCE_SURVEY) was developed using *Survey Monkey* and sent by MDHHS staff via e-mail to each of the following groups on 2/1/2017:
+
+* Advocates and Advocacy Organizations
+* Habilitation Support Waiver Leads
+* SIS® Assessors and Quality Leads
+* CEOs of CMHSP agencies (*for distribution to IDD staff*)
+
+A reminder e-mail was distributed on 3/14/17 in advance of the closing of the survey on 3/17/17.  
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr); library(magrittr); library(tidyr); library(forcats); library(plotly)
+
+# Read in data
+sis_survey <- read.csv("survey_results/CSV/Sheet_1.csv", na.strings = c("NA",""))
+
+# Clean survey and rm unnecessary fields
+
+sis_survey %<>% 
+  # Remove columns with all NAs
+  select_if(colSums(!is.na(.)) > 0) %>%
+  mutate(RespondentID = as.factor(RespondentID),
+         CollectorID = as.factor(CollectorID)) %>%
+  # Remove test collector results
+  filter(CollectorID != "152740888") %>%
+  # Rename fields for readability
+  rename(role = Which.statement.best.describes.your.involvement.in.Intellectual.and.Developmental.Disabilities..IDD..services.in.Michigan.,
+         use_access = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Make.sure.people.receive.the.services.they.need,
+         use_networkdev = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Understand.population.level.needs.for.development.of.provider.network.capacity,
+         use_networkadeq = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Evaluate.network.adequacy.for.people.with.IDD,
+         use_geography = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Identify.geographic.areas.to.increase.service.availability.or.build.new.programs,
+         use_popdiff = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Understand.differences.in.needs.across.the.population,
+         use_iposneeds = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Recommend.specific.needs.for.inclusion.in.an.individual.plan.of.service..IPOS.,
+         use_iposgoals = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Inform.the.person.centered.planning.process.by.identifying.potential.goals.and.objectives,
+         use_refer = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Identify.potential.service.referrals.for.individuals,
+         use_safetyplan = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Help.guide.safety.planning,
+         use_predictcost = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Predict.costs,
+         use_newservice = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Forecast.a.need.for.services.which.may.not.currently.be.available,
+         use_naturalsupport = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Identify.people.who.may.be.at.risk.if.they.lose.a.large.portion.of.natural.supports..e.g..aging.parents.,
+         use_consistentauth = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Identify.cases.where.services.being.authorized.or.provided.are.inconsistent.with.a.person.s.needs,
+         use_itemintent = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Ensure.that.assessors.are.consistently.understanding.item.intent,
+         use_timely = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Ensure.SISÂ..assessments.are.being.completed.in.a.timely.manner,
+         use_valid = How.could.the.data.from.the.SISÂ..assessment.help.you.to.perform.your.role....Review.validity.and.reliability.of.SISÂ..assessments,
+         review_IRQR = Please.rate.the.frequency.at.which.you.review.the.following.data....I.review.SISÂ..results..assessor.ratings.compared.to.regional.ratings..as.a.part.of.the.Interviewer.Reliability.and.Qualification.Review..IRQR..process.,
+         review_drift = Please.rate.the.frequency.at.which.you.review.the.following.data....I.review.SISÂ..results..assessor.ratings.compared.to.regional.ratings..as.a.part.of.the.Periodic.Drift.Review.process.,
+         review_compliance = Please.rate.the.frequency.at.which.you.review.the.following.data....I.audit.local.SISÂ..data.for.compliance.and.procedural.drift.markers.,
+         family_receives = The.individuals.families.I.serve.receive.the.SISÂ..Family.Friendly.report.by.,
+         review_glance = I.review.the.SISÂ..assessment.report.by....Glancing.over.it,
+         review_importtofor = I.review.the.SISÂ..assessment.report.by....Briefly.reviewing.the..important.to..and..important.for..sections,
+         review_readall = I.review.the.SISÂ..assessment.report.by....I.read.the.entire.report,
+         review_makenotes = I.review.the.SISÂ..assessment.report.by....Making.notes.of.items.to.include.in.person.centered.planning.process,
+         review_compareyears = I.review.the.SISÂ..assessment.report.by....Comparing.needs.to.goals.from.last.year.s.plan.and.make.notes.on.any.gaps.or.changes,
+         review_none = I.review.the.SISÂ..assessment.report.by....I.don.t.review.the.SIS.assessment.report,
+         review_other = I.review.the.SISÂ..assessment.report.by....Other..please.specify.,
+         review_otherdesc = I.review.the.SISÂ..assessment.report.by....Other..please.specify..1,
+         sc_goals = Please.identify.the.item.which.best.reflects.your.use.of.information.from.the.SISÂ.....I.use.the.identified.needs.in.the.SISÂ..assessment.report.to.identify.potential.goals.and.objectives,
+         sc_services = Please.identify.the.item.which.best.reflects.your.use.of.information.from.the.SISÂ.....I.use.the.identified.needs.in.the.SISÂ..assessment.report.to.identify.potential.service.referrals,
+         sc_pcp = Please.identify.the.item.which.best.reflects.your.use.of.information.from.the.SISÂ.....I.embed.the.review.of.SISÂ..assessment.results.into.my.preparation.for.or.facilitation.of.person.centered.planning.meetings,
+         sc_amtscpdur = Please.identify.the.item.which.best.reflects.your.use.of.information.from.the.SISÂ.....I.use.the.information.found.in.the.SISÂ..assessment.report.to.inform.the.amount..scope..and.duration.of.services.requested.in.the.Individual.Plan.of.Service..IPOS.,
+         sc_whynot = Please.identify.the.item.which.best.reflects.your.use.of.information.from.the.SISÂ.....If.you.answered.Never.or.Occasionally..please.explain.why.,
+         time_review = I.spend.the.following.amount.of.time..average.per.person.family...........reviewing.the.SISÂ..assessment.report,
+         time_explain = I.spend.the.following.amount.of.time..average.per.person.family...........explaining.the.SISÂ..results,
+         time_whynot = I.spend.the.following.amount.of.time..average.per.person.family.......If.you.selected.None..please.explain.why.,
+         qual_explain = Please.indicate.your.level.of.agreement.with.the.following.statements....I.am.confident.I.provide.a.helpful.and.thorough.explanation.of.the.SISÂ..assessment.results.to.persons.served.family.members.,
+         qual_pcptrain = Please.indicate.your.level.of.agreement.with.the.following.statements....I.have.received.adequate.training.on.how.to.understand.and.discuss.SISÂ..assessment.results.and.how.SISÂ..assessment.information.should.be.used.in.the.context.of.person.centered.planning.,
+         qual_whynot = Please.indicate.your.level.of.agreement.with.the.following.statements....If.you.selected.Strongly.Disagree.or.Disagree..please.explain.why.,
+         deferneed = I.use.SISÂ..assessment.data.to.ensure.any.identified.need.that.is.not.addressed.in.the.individual.plan.of.service..IPOS..is.deferred.by.,
+         deferneed_whynot = I.use.SISÂ..assessment.data.to.ensure.any.identified.need.that.is.not.addressed.in.the.individual.plan.of.service..IPOS..is.deferred.by....If.you.selected..I.don.t.use.SIS.assessment.data.for.this...please.explain.why.,
+         integrate_pcp_open = What.is.the.most.effective.and.efficient.way.to.incorporate.review.of.SISÂ..assessment.results.into.clinical.processes.and.person.centered.planning....Open.Ended.Response,
+         cls_role = The.SISÂ..assessment.results.help.me.understand.my.role.as.a.CLS.worker.and.how.I.can.better.support.the.individual.with.whom.I.am.working.,
+         cls_whynot = The.SISÂ..assessment.results.help.me.understand.my.role.as.a.CLS.worker.and.how.I.can.better.support.the.individual.with.whom.I.am.working....If.you.selected.Strongly.Disagree.or.Disagree..please.explain.why.,
+         um_locreview = I.review.SISÂ..assessment.results.to.inform.my.utilization.management.decisions....When.completing.a.UM.record.review.to.determine.if.appropriate.level.of.care.is.being.provided,
+         hsw_identify = My.region.has.a.process.for.using.the.SISÂ..data.to.identify.individuals.who.may.benefit.from.HSW.services.,
+         super_review = Please.rate.the.following.based.on.your.experience.within.the.programs.you.oversee....Timely.completion.of.SISÂ..assessments.is.reviewed.in.supervision.with.Supports.Coordinators.Case.Managers.on.a.regular.basis.,
+         super_explain = Please.rate.the.following.based.on.your.experience.within.the.programs.you.oversee....Supports.Coordinators.Case.Managers.have.received.adequate.training.on.how.to.understand.SISÂ..assessment.results.and.explain.these.to.consumers.family.members.,
+         super_pcptrain = Please.rate.the.following.based.on.your.experience.within.the.programs.you.oversee....Supports.Coordinators.Case.Managers.receive.adequate.training.on.how.to.use.SISÂ..assessment.results.to.inform.the.person.centered.planning.process.,
+         super_whynot = Please.rate.the.following.based.on.your.experience.within.the.programs.you.oversee....If.you.selected.Strongly.Disagree.or.Disagree..please.explain.why.,
+         direct_timely = Supervisors.within.the.programs.I.oversee.utilize.a.process.for.monitoring.the.timeliness.of.SISÂ..family.friendly.reports.being.provided.to.families.and.SISÂ..assessment.reports.being.provided.to.Support.Coordinators.Case.Managers.,
+         family_friendly = The.family.friendly.SISÂ..summary.reports.are.helpful.and.inform.the.person.centered.plan.,
+         participated = Did.you.participate.in.a.SISÂ..assessment.within.the.past.six.months.,
+         participant_purpose = Please.complete.the.following.items.as.they.apply.to.the.SISÂ..assessment.in.which.you.participated....The.purpose.of.the.assessment.was.explained.to.me.clearly.,
+         participant_answers = Please.complete.the.following.items.as.they.apply.to.the.SISÂ..assessment.in.which.you.participated....The.assessor.was.friendly.and.helpful.in.answering.my.questions.,
+         participant_respect = Please.complete.the.following.items.as.they.apply.to.the.SISÂ..assessment.in.which.you.participated....I.was.treated.with.dignity.and.respect.throughout.the.process.,
+         participant_understand = Please.complete.the.following.items.as.they.apply.to.the.SISÂ..assessment.in.which.you.participated....The.assessment.helped.me.to.better.understand.the.needs.of.the.individual.being.assessed.,
+         participant_results = Please.complete.the.following.items.as.they.apply.to.the.SISÂ..assessment.in.which.you.participated....I.understood.the.results.of.the.assessment.,
+         participant_received = I.received.the.results.of.the.assessment.in.a.report.,
+         overall = IDD.Services.within.Michigan.are.effectively.using.SISÂ..assessment.data.to.inform.and.improve.care.,
+         overall_whynot = IDD.Services.within.Michigan.are.effectively.using.SISÂ..assessment.data.to.inform.and.improve.care....If.you.selected.Strongly.Disagree.or.Disagree..please.explain.why.) %>%
+  # Recode Roles
+  mutate(role = recode(role,
+                       `I am a Supports Coordinator/Case Manager serving individuals with IDD.` = "Supports Coordinator",
+                       `I am a Supervisor/Director of programs for individuals with IDD.` = "Program Director",
+                       `I am a supervisor of SISÂ® Assessor(s).` = "Assessor Supervisor",
+                       `I am a regional SISÂ® Quality Lead and/or a SISÂ® Assessor.` = "SIS Assessor or Quality Lead",
+                       `I am an advocate for individuals with IDD.` = "Advocate",
+                       `I perform Utilization Management (UM) functions at an agency serving individuals with IDD or an agency that manages services for individuals with IDD.` = "Utilization Management",
+                       `I am a community living support worker for individuals with IDD.` = "Community Living Supports",
+                       `I am a Habilitation Supports Waiver Director.` = "HSW Manager")) %>%
+  select(-CollectorID, -StartDate, -EndDate, -starts_with("Please.rate.the."))
+
+# Make a key to allow readable names for question content
+column_key <-
+  sis_survey %>%
+  colnames() %>%
+  as.data.frame() 
+names(column_key)[1] <- "col_name"
+column_key %<>%
+  mutate(long_desc = recode(col_name,
+                            `role` = "Respondent involvement in IDD services in Michigan",
+                            `use_access` = "Make sure people receive the services they need",
+                            `use_networkdev` = "Inform development of provider network",
+                            `use_networkadeq` = "Evaluate provider network adequacy",
+                            `use_geography` = "Identify locations to make services available",
+                            `use_popdiff` = "Understand different needs across population",
+                            `use_iposneeds` = "Recommend individual needs to inform IPOS",
+                            `use_iposgoals` = "Identify potential goals and objectives for IPOS",
+                            `use_refer` = "Identify potential service referrals",
+                            `use_safetyplan` = "Help guide safety planning",
+                            `use_predictcost` = "Predict costs",
+                            `use_newservice` = "Forecast need for services not yet available",
+                            `use_naturalsupport` = "Identify impact of losing natural supports",
+                            `use_consistentauth` = "Identify services inconsistent with needs",
+                            `use_itemintent` = "Align interpretation of items by assessors",
+                            `use_timely` = "Ensure timely completion of assessments",
+                            `use_valid` = "Review validity and reliability of assessments"),
+         short_desc = recode(col_name,
+                            `role` = "Respondent role",
+                            `use_access` = "Access to Services",
+                            `use_networkdev` = "Provider Development",
+                            `use_networkadeq` = "Network Adequacy",
+                            `use_geography` = "Service Locations",
+                            `use_popdiff` = "Population Needs",
+                            `use_iposneeds` = "IPOS Needs",
+                            `use_iposgoals` = "IPOS Goals",
+                            `use_refer` = "Service Referrals",
+                            `use_safetyplan` = "Safety Planning",
+                            `use_predictcost` = "Predict Costs",
+                            `use_newservice` = "Forecast Service Need",
+                            `use_naturalsupport` = "Natural Support Impact",
+                            `use_consistentauth` = "Consistent Authorization",
+                            `use_itemintent` = "Item Intent",
+                            `use_timely` = "Assessment Timeliness",
+                            `use_valid` = "Validity and Reliability"))
+         
+
+```
+
+## Who responded?
+
+### Who attended the focus groups?
+
+### Who answered the survey?
+
+`r n_distinct(sis_survey$RespondentID)` people responded to the survey from `r n_distinct(sis_survey$IP.Address)` locations across the state of Michigan. When asked which role best described their involvement in services for individuals with intellectual and developmental disabilities in Michigan, the respondents identified as follows:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+sis_survey %>%
+  group_by(role) %>%
+  summarize(n = n()) %>%
+  mutate(role = fct_reorder(role, n, .desc = T)) %>%
+  plot_ly(x = ~role, y = ~n,
+          hoverinfo = 'text',
+          text = ~paste(n," respondents identified their role as <br>",
+                        role)) %>% 
+  add_bars() %>% 
+  layout(margin = list(b = 150),
+         xaxis = list(title = "", tickangle = 45),
+         yaxis = list(title = "Respondents in this role"))
+```
+
+By far, the largest role represented in the responses is Supports Coordinator (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Supports Coordinator"])`), followed by directors of programs for IDD (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Program Director"])`) and SIS assessors (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "SIS Assessor or Quality Lead"])`).  All other roles had fewer than 10 responses.  Since Supports Coordinators are a crucial part of helping to translate an individual's assessed needs into a dialogue to inform person-centered planning and eventually authorizations for services, it is encouraging to have such a strong response in this area.  
+
+## How is the data being used?
+
+**Most common current uses**
+
+The chart below shows the number of respondents who indicated that they were already using the SIS assessment results to inform their work in a given area (i.e. they responded *"Currently using in my role"* to the specific item).
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+using <-
+  sis_survey %>%
+  select(role,starts_with("use_")) %>%
+  mutate_at(.cols = vars(starts_with("use_")),
+            .funs = funs(. == "Currently using in my role")) %>%
+  gather(use, YorN, -role)
+
+using %>%
+  group_by(use) %>%
+  summarize(n = sum(YorN)) %>%
+  ungroup() %>%
+  left_join(column_key, by = c("use" = "col_name")) %>%
+  droplevels() %>% ungroup() %>%
+  mutate(short_desc = fct_reorder(short_desc, n, .desc = T)) %>%
+  plot_ly(x = ~short_desc, y = ~n,
+          hoverinfo = 'text',
+          text = ~paste(n," respondents report using the data to <br>",
+                        long_desc)) %>% 
+  add_bars() %>% 
+  layout(margin = list(b = 150),
+         xaxis = list(title = "", tickangle = 45),
+         yaxis = list(title = "Respondents currently using"))
+
+```
+
+A quick look at the responses shows that the most common use of SIS® data is to inform the individual plan of service (IPOS) and related tasks.  This is not surprising, given the large number of responses from Supports Coordinators
+
+**Current uses of data by role**
+
+What percentage of respondents in each role is currently performing each use?
+
+```{r}
+
+```
+
+
+As mentioned earlier, there are a number of 
+
+
+## Potential uses of the data
+
+
+
+
+## Guiding principles
+
+While there are some basic ethical principles guiding the use of this data for any purpose, one of the guiding principles of the questions we asked was that uses of the data should be defined by role.  For instance, while we may not want a supports coordinator using SIS data by itself to determine medical necessity for services at the individual level, it may be entirely appropriate for a provider network manager to use the same data to explore whether there are enough services in a given area to meet the needs of the entire population served.  The *role* which is using the data matters.
+
+Skepticism
+
+
+
+
+
+                                       
+
