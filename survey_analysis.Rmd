@@ -229,7 +229,40 @@ A quick look at the responses shows that the most common use of SIS® data is to
 
 **Current uses of data by role**
 
-What percentage of respondents in each role is currently performing each use?
+What percentage of respondents in each role is currently performing each use?  In the visual below, a darker blue means that a higher percent of respondents indicated they were currently using SIS data for a particular purpose.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+tst <- 
+using %>%
+  group_by(role, use) %>%
+  summarize(n = sum(YorN),
+            total = n()) %>%
+  mutate(pct = n / total) %>%
+  ungroup() %>%
+  left_join(column_key, by = c("use" = "col_name")) %>%
+  select(short_desc,role,pct) %>%
+  droplevels() %>%
+  group_by(short_desc) %>%
+  spread(role,pct) %>%
+  ungroup()
+
+tst %>%
+  select(-short_desc) %>%
+  mutate_all(.funs = funs(round(. * 100, digits = 1))) %>%
+  as.matrix() %>%
+  plot_ly(x = colnames(.), 
+          y = tst$short_desc, 
+          z = ., 
+          type = "heatmap",
+          colors = "Blues") %>% 
+  layout(margin = list(l = 170, b = 150),
+         xaxis = list(title = "Role", tickangle = 45),
+         yaxis = list(title = "Type of Use"))
+
+```
+
+**If people are not using the data, why not?**
 
 ```{r}
 
@@ -241,7 +274,12 @@ As mentioned earlier, there are a number of
 
 ## Potential uses of the data
 
+Knowing how respondents are already using the data is helpful, yet it may reflect only a few of the full range of potential uses for this data. The chart below shows the proportion of respondents who indicated that a particular use of the data would be relevant for their role 
 
+
+
+
+Indeed, it is likely that many potential uses were not even listed in the survey responses.  As with any resource, people will use data for ingenious and unpredictable purposes.  For this reason, it is important that there be principles to guide the use of this data across the system.
 
 
 ## Guiding principles
