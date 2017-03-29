@@ -1,11 +1,15 @@
 ---
 title: "SIS User Survey"
 output:
-  html_document: default
-  html_notebook: default
+  html_document: 
+    theme: flatly
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    self_contained: false
 ---
 
-## What is this report?
+# What is this report about?
 
 The Supports Intensity Scale (SIS®) is a standardized assessment tool implemented by the Michigan Department of Health and Human Services (MDHHS) for all Medicaid-eligible persons 18 and older who have intellectual or developmental disabilities (IDD) and who are currently receiving case management or supports coordination or respite-only services through the behavioral health system. Use of the tool began in July of 2014 and by September 30th of 2017 the intent is for all eligible individuals to have received an assessment.
 
@@ -13,13 +17,13 @@ In anticipation of the completion of this initial implementation phase, MDHHS so
 
 This document is a summary of the feedback they received.
 
-## How people provided feedback
+# How stakeholders contributed
 
-### Focus Groups
+## Focus Groups
 
 A series of focus groups were scheduled throughout the state for individuals with intellectual or developmental disabilities, their family members, and their Supports Coordinators/Case Managers. The purpose of these focus groups was to understand people's current use of data from the SIS® and to understand peoples feedback how the data might be used to inform the Person-Centered Planning process, ensuring that individuals receive supports and services according to their needs. Four focus groups were offered at locations throughout the state (*in Detroit, Petoskey, Kalamazoo, and Mount Pleasant*) to reach a broad audience and minimize travel time for attendees. 
 
-### Survey
+## Survey
 
 [A survey](https://www.surveymonkey.com/r/SIS_USER_EXPERIENCE_SURVEY) was developed using *Survey Monkey* and sent by MDHHS staff via e-mail to each of the following groups on 2/1/2017:
 
@@ -167,11 +171,11 @@ column_key %<>%
 
 ```
 
-## Who responded?
+# Who responded?
 
-### Who attended the focus groups?
+## Who attended the focus groups?
 
-### Who answered the survey?
+## Who answered the survey?
 
 `r n_distinct(sis_survey$RespondentID)` people responded to the survey from `r n_distinct(sis_survey$IP.Address)` locations across the state of Michigan. When asked which role best described their involvement in services for individuals with intellectual and developmental disabilities in Michigan, the respondents identified as follows:
 
@@ -192,7 +196,7 @@ sis_survey %>%
 
 By far, the largest role represented in the responses is Supports Coordinator (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Supports Coordinator"])`), followed by directors of programs for IDD (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Program Director"])`) and SIS assessors (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "SIS Assessor or Quality Lead"])`).  All other roles had fewer than 10 responses.  Since Supports Coordinators are a crucial part of helping to translate an individual's assessed needs into a dialogue to inform person-centered planning and eventually authorizations for services, it is encouraging to have such a strong response in this area.  
 
-## How is the data being used?
+# How is SIS data being used now?
 
 **Most common current uses**
 
@@ -272,7 +276,7 @@ tst %>%
 As mentioned earlier, there are a number of 
 
 
-## Potential uses of the data
+# How could the data be used?
 
 Knowing how respondents are already using the data is helpful, yet it may reflect only a few of the full range of potential uses for this data. The chart below shows the proportion of respondents who indicated that a particular use of the data would be relevant for their role 
 
@@ -282,7 +286,7 @@ Knowing how respondents are already using the data is helpful, yet it may reflec
 Indeed, it is likely that many potential uses were not even listed in the survey responses.  As with any resource, people will use data for ingenious and unpredictable purposes.  For this reason, it is important that there be principles to guide the use of this data across the system.
 
 
-## Guiding principles
+# Guiding principles
 
 While there are some basic ethical principles guiding the use of this data for any purpose, one of the guiding principles of the questions we asked was that uses of the data should be defined by role.  For instance, while we may not want a supports coordinator using SIS data by itself to determine medical necessity for services at the individual level, it may be entirely appropriate for a provider network manager to use the same data to explore whether there are enough services in a given area to meet the needs of the entire population served.  The *role* which is using the data matters.
 
