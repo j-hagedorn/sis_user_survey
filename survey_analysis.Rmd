@@ -1,5 +1,6 @@
 ---
-title: "SIS User Survey"
+title: "Person-Centered Measurement"
+author: "Uses of Assessment Data to Inform Services for Individuals with Intellectual and Developmental Disabilities"
 output:
   html_document: 
     theme: flatly
@@ -9,35 +10,13 @@ output:
     self_contained: false
 ---
 
-# What is this report about?
-
-The Supports Intensity Scale (SIS®) is a standardized assessment tool implemented by the Michigan Department of Health and Human Services (MDHHS) for all Medicaid-eligible persons 18 and older who have intellectual or developmental disabilities (IDD) and who are currently receiving case management or supports coordination or respite-only services through the behavioral health system. Use of the tool began in July of 2014 and by September 30th of 2017 the intent is for all eligible individuals to have received an assessment.
-
-In anticipation of the completion of this initial implementation phase, MDHHS sought feedback from people receiving services and supports, their family members, advocates, prepaid inpatient health plan (PIHP) employees, community mental health (CMH) agencies and service providers regarding current and potential uses of the data from the SIS® assessment tool.
-
-This document is a summary of the feedback they received.
-
-# How stakeholders contributed
-
-## Focus Groups
-
-A series of focus groups were scheduled throughout the state for individuals with intellectual or developmental disabilities, their family members, and their Supports Coordinators/Case Managers. The purpose of these focus groups was to understand people's current use of data from the SIS® and to understand peoples feedback how the data might be used to inform the Person-Centered Planning process, ensuring that individuals receive supports and services according to their needs. Four focus groups were offered at locations throughout the state (*in Detroit, Petoskey, Kalamazoo, and Mount Pleasant*) to reach a broad audience and minimize travel time for attendees. 
-
-## Survey
-
-[A survey](https://www.surveymonkey.com/r/SIS_USER_EXPERIENCE_SURVEY) was developed using *Survey Monkey* and sent by MDHHS staff via e-mail to each of the following groups on 2/1/2017:
-
-* Advocates and Advocacy Organizations
-* Habilitation Support Waiver Leads
-* SIS® Assessors and Quality Leads
-* CEOs of CMHSP agencies (*for distribution to IDD staff*)
-
-A reminder e-mail was distributed on 3/14/17 in advance of the closing of the survey on 3/17/17.  
-
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(dplyr); library(magrittr); library(tidyr); library(forcats); library(plotly)
+library(dplyr); library(magrittr); library(tidyr); library(forcats); library(plotly); library(readxl)
 
-# Read in data
+# Read in focus group summary data
+sis_focus <- read_excel("focus_group_quotes.xlsx")
+
+# Read in survey data
 sis_survey <- read.csv("survey_results/CSV/Sheet_1.csv", na.strings = c("NA",""))
 
 # Clean survey and rm unnecessary fields
@@ -168,14 +147,43 @@ column_key %<>%
                             `use_timely` = "Assessment Timeliness",
                             `use_valid` = "Validity and Reliability"))
          
+use_groups <- read.csv("use_groups.csv")
 
 ```
 
-# Who responded?
+# What is this report about?
 
-## Who attended the focus groups?
+The Supports Intensity Scale (SIS®) is a standardized assessment tool implemented by the Michigan Department of Health and Human Services (MDHHS) for all Medicaid-eligible persons 18 and older who have intellectual or developmental disabilities (IDD) and who are currently receiving case management or supports coordination or respite-only services through the behavioral health system. Use of the tool began in July of 2014 and by September 30th of 2017 the intent is for all eligible individuals to have received an assessment.
 
-## Who answered the survey?
+In anticipation of the completion of this initial implementation phase, MDHHS sought feedback from people receiving services and supports, their family members, advocates, prepaid inpatient health plan (PIHP) employees, community mental health (CMH) agencies and service providers regarding current and potential uses of the data from the SIS® assessment tool.
+
+This document is intended to accomplish two objectives: 
+
+* Provide a summary of feedback from individuals who participated in the survey and/or focus groups.
+* Provide guidance regarding potential uses of the data from the SIS® assessment tool by stakeholders in multiple roles throughout Michigan's behavioral health system.
+
+---
+
+# Who contributed to the report?
+
+The guidance and thinking presented here is the result of substantial input from across the behavioral health system.  Contributions were made in the following ways...
+
+## Focus Groups
+
+A series of focus groups were scheduled throughout the state for individuals with intellectual or developmental disabilities, their family members, and their Supports Coordinators/Case Managers. The purpose of these focus groups was to understand people's current use of data from the SIS® and to understand peoples feedback how the data might be used to inform the Person-Centered Planning process, ensuring that individuals receive supports and services according to their needs. Four focus groups were offered at locations throughout the state (*in Detroit, Petoskey, Kalamazoo, and Mount Pleasant*) to reach a broad audience and minimize travel time for attendees. 
+
+## Survey
+
+[A survey](https://www.surveymonkey.com/r/Preview/?sm=O_2BNG1KDfFzgrTWySDftS7l01lFo5CEw11Po46B_2FKYGej_2FudfAYH_2BPr0I3SK4VNAg) was developed using *Survey Monkey* and sent by MDHHS staff via e-mail to each of the following groups on 2/1/2017:
+
+* Advocates and Advocacy Organizations
+* Habilitation Support Waiver Leads
+* SIS® Assessors and Quality Leads
+* CEOs of CMHSP agencies (*for distribution to IDD staff*)
+
+A reminder e-mail was distributed on 3/14/17 in advance of the closing of the survey on 3/17/17.  
+
+The survey reviewed users from various roles regarding their current and potential future uses of the SIS® assessment data.^[The list of potential uses of the data which were included in the survey questions were originally identified by practitioners in the field and subsequently reviewed by MDHHS].  It also gathered feedback related to user experience with the tool and its implementation in Michigan.  
 
 `r n_distinct(sis_survey$RespondentID)` people responded to the survey from `r n_distinct(sis_survey$IP.Address)` locations across the state of Michigan. When asked which role best described their involvement in services for individuals with intellectual and developmental disabilities in Michigan, the respondents identified as follows:
 
@@ -194,9 +202,22 @@ sis_survey %>%
          yaxis = list(title = "Respondents in this role"))
 ```
 
-By far, the largest role represented in the responses is Supports Coordinator (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Supports Coordinator"])`), followed by directors of programs for IDD (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Program Director"])`) and SIS assessors (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "SIS Assessor or Quality Lead"])`).  All other roles had fewer than 10 responses.  Since Supports Coordinators are a crucial part of helping to translate an individual's assessed needs into a dialogue to inform person-centered planning and eventually authorizations for services, it is encouraging to have such a strong response in this area.  
+By far, the largest role represented in the responses is Supports Coordinator (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Supports Coordinator"])`), followed by directors of programs for IDD (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Program Director"])`) and SIS assessors (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "SIS Assessor or Quality Lead"])`).  All other roles had fewer than 10 responses.  Since Supports Coordinators are a crucial part of helping to translate an individual's assessed needs into a dialogue to inform person-centered planning and eventually authorizations for services, it is encouraging to have such a strong response in this area. 
 
-# How is SIS data being used now?
+## MDHHS Review
+
+The contents of this report have also been reviewed by key staff members within MDHHS, including:
+
+* List
+* Staff
+* Members 
+* Here
+
+---
+
+# Uses of the Data
+
+## Summary of Uses
 
 **Most common current uses**
 
@@ -209,6 +230,13 @@ using <-
   select(role,starts_with("use_")) %>%
   mutate_at(.cols = vars(starts_with("use_")),
             .funs = funs(. == "Currently using in my role")) %>%
+  gather(use, YorN, -role)
+
+usable <-
+  sis_survey %>%
+  select(role,starts_with("use_")) %>%
+  mutate_at(.cols = vars(starts_with("use_")),
+            .funs = funs(. %in% c("Currently using in my role","Could be useful in my role"))) %>%
   gather(use, YorN, -role)
 
 using %>%
@@ -272,19 +300,288 @@ tst %>%
 
 ```
 
+Knowing how respondents are already using the data is helpful, yet it may reflect only a few of the full range of potential uses for this data. The chart below shows the proportion of respondents who indicated that a particular use of the data would be relevant for their role.
 
-As mentioned earlier, there are a number of 
+```{r}
 
-
-# How could the data be used?
-
-Knowing how respondents are already using the data is helpful, yet it may reflect only a few of the full range of potential uses for this data. The chart below shows the proportion of respondents who indicated that a particular use of the data would be relevant for their role 
-
-
-
+```
 
 Indeed, it is likely that many potential uses were not even listed in the survey responses.  As with any resource, people will use data for ingenious and unpredictable purposes.  For this reason, it is important that there be principles to guide the use of this data across the system.
 
+---
+
+## Use in Person-Centered Planning
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Subset use responses
+use_pcp <-
+  usable %>%
+  left_join(column_key, by = c("use" = "col_name")) %>%
+  left_join(use_groups, by = "short_desc") %>%
+  filter(use_group == "Person-Centered Planning")
+
+```
+
+### Specific Use Cases
+
+Since person-centered planning is central to the entire system of services and supports, it may help to identify several distinct uses for assessment data within the person-centered planning process.
+
+Assessment data might be used in the following ways to support person-centered planning:
+
+* Recommend individual needs to inform an individualized plan of service (IPOS)
+* Identify potential goals and objectives for inclusion in the IPOS
+* Identify potential referrals for additional assessments or relevant services
+* Help guide safety planning by identifying areas of risk
+* Design an individualized menu of services to support an individual to live in the community
+* Identify individual strengths for inclusion in the IPOS
+* Provide guidance regarding supports which may provide alternatives to guardianship
+
+### Current and Potential Usage
+
+The chart below shows the number of respondents who indicated that the data from the assessment could be relevant for them in their current roles (i.e. they responded either *"Currently using in my role"* or *"Could be useful in my role"* to the specific item).
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# using a stacked bar chart with one bar for specific use and stacked by role, intended or potential uses by role
+
+use_pcp %>%
+  group_by(short_desc,long_desc,role) %>%
+  summarize(n = sum(YorN)) %>%
+  ungroup() %>%
+  mutate(short_desc = fct_reorder(short_desc, n, .desc = T)) %>%
+  plot_ly(x = ~short_desc, y = ~n, color = ~role,
+          hoverinfo = 'text',
+          text = ~paste(n,
+                        " respondents in the role of <br>",
+                        role,
+                        " indicate the data may be relevant to <br>",
+                        long_desc)) %>% 
+  add_bars() %>% 
+  layout(margin = list(b = 150),
+         barmode = 'stack',
+         xaxis = list(title = "", tickangle = 45),
+         yaxis = list(title = "Respondents indicating relevance"))
+
+```
+
+### Considerations
+
+A number of considerations were identified by focus group attendees during their dialogue.  These themes are summarized below.
+
+#### Integration into PCP process
+
+While this data may have potential, that potential remains untapped if it is not transformed into information and integrated into the actual PCP process for individuals receiving services.  Feedback from focus groups consistently stressed two things: 
+
+1. That this integration was crucial, and held one of the greatest areas of potential for use of the data.
+2. That this integration was far from being the standard of practice in current person-centered planning.
+
+The excerpted feedback below attests to this:
+
+> *""*
+
+For this integration to become a reality, several logistical issues will need to be resolved:
+
+**Consistent Integration into PCP Workflow**
+
+> *"We sat down for 90 minutes with a CM to make that connection. She’s the only one... that uses the SIS and aligns it with PCP. She’s tried to show new CM’s, and they’re like... well there’s just a lot that they have to do."*
+
+#### Overcoming preconceptions
+
+---
+
+## Use in Managing a Provider Network
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Subset use responses
+use_prov <-
+  usable %>%
+  left_join(column_key, by = c("use" = "col_name")) %>%
+  left_join(use_groups, by = "short_desc") %>%
+  filter(use_group == "Managing a Provider Network")
+
+```
+
+### Specific Use Cases
+
+Tailoring services to the needs of an individual is a hallmark of person-centered planning, but there is an additional level of complexity required to support the evolution of provider networks adapted to meet the precise needs of the populations they serve.  Assessment data from the SIS® has been identified as having potential applications in the following areas related to provider network management:
+
+* Inform the development of provider network service offerings. 
+* Evaluate provider network adequacy relative to the specific needs of the population in a given area.         
+* Identify locations to make services available for individuals within an accessible distance from their homes.
+* Forecast needs for services not yet available. 
+* Provide consistent guidance to service providers related to the scope, duration and intensity of services authorized by the IPOS.
+
+### Current and Potential Usage
+
+The chart below shows the number of respondents who indicated that the data from the assessment could be relevant for them in their current roles (i.e. they responded either *"Currently using in my role"* or *"Could be useful in my role"* to the specific item).
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# using a stacked bar chart with one bar for specific use and stacked by role, intended or potential uses by role
+
+use_prov %>%
+  group_by(short_desc,long_desc,role) %>%
+  summarize(n = sum(YorN)) %>%
+  ungroup() %>%
+  mutate(short_desc = fct_reorder(short_desc, n, .desc = T)) %>%
+  plot_ly(x = ~short_desc, y = ~n, color = ~role,
+          hoverinfo = 'text',
+          text = ~paste(n,
+                        " respondents in the role of <br>",
+                        role,
+                        " indicate the data may be relevant to <br>",
+                        long_desc)) %>% 
+  add_bars() %>% 
+  layout(margin = list(b = 150),
+         barmode = 'stack',
+         xaxis = list(title = "", tickangle = 45),
+         yaxis = list(title = "Respondents indicating relevance"))
+
+```
+
+### Considerations
+
+---
+
+## Use in Assuring Access and Equity
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Subset use responses
+use_um <-
+  usable %>%
+  left_join(column_key, by = c("use" = "col_name")) %>%
+  left_join(use_groups, by = "short_desc") %>%
+  filter(use_group == "Assuring Access and Equity")
+
+```
+
+Of all the potential uses of data from the SIS® assessment, this was one of the most commonly endorsed during focus group forums. 
+
+### Specific Use Cases
+
+ 
+
+### Current and Potential Usage
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# using a stacked bar chart with one bar for specific use and stacked by role, intended or potential uses by role
+
+use_um %>%
+  group_by(short_desc,long_desc,role) %>%
+  summarize(n = sum(YorN)) %>%
+  ungroup() %>%
+  mutate(short_desc = fct_reorder(short_desc, n, .desc = T)) %>%
+  plot_ly(x = ~short_desc, y = ~n, color = ~role,
+          hoverinfo = 'text',
+          text = ~paste(n,
+                        " respondents in the role of <br>",
+                        role,
+                        " indicate the data may be relevant to <br>",
+                        long_desc)) %>% 
+  add_bars() %>% 
+  layout(margin = list(b = 150),
+         barmode = 'stack',
+         xaxis = list(title = "", tickangle = 45),
+         yaxis = list(title = "Respondents indicating relevance"))
+
+```
+
+### Considerations
+
+---
+
+## Use in Understanding Population Needs
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Subset use responses
+use_pop <-
+  usable %>%
+  left_join(column_key, by = c("use" = "col_name")) %>%
+  left_join(use_groups, by = "short_desc") %>%
+  filter(use_group == "Understanding Population Needs")
+
+```
+
+### Specific Use Cases
+
+### Current and Potential Usage
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# using a stacked bar chart with one bar for specific use and stacked by role, intended or potential uses by role
+
+use_pop %>%
+  group_by(short_desc,long_desc,role) %>%
+  summarize(n = sum(YorN)) %>%
+  ungroup() %>%
+  mutate(short_desc = fct_reorder(short_desc, n, .desc = T)) %>%
+  plot_ly(x = ~short_desc, y = ~n, color = ~role,
+          hoverinfo = 'text',
+          text = ~paste(n,
+                        " respondents in the role of <br>",
+                        role,
+                        " indicate the data may be relevant to <br>",
+                        long_desc)) %>% 
+  add_bars() %>% 
+  layout(margin = list(b = 150),
+         barmode = 'stack',
+         xaxis = list(title = "", tickangle = 45),
+         yaxis = list(title = "Respondents indicating relevance"))
+
+```
+
+### Considerations
+
+## Use in Advocacy
+
+### Specific Use Cases
+
+### Current and Potential Usage
+
+```{r}
+# using a stacked bar chart with one bar for specific use and stacked by role, intended or potential uses by role
+```
+
+### Considerations
+
+## Inappropriate Uses
+
+# What issues impact use of the data?
+
+While data is stored in databases and defined in specifications, the *meaning* of the data is influenced by any number of issues which 
+
+## Messaging related to use of the SIS
+
+It is worth noting that, during the focus groups, respondents did not draw a clear line between the official messaging provided by MDHHS and the informal messaging communicated within their own organizations or teams.  The issues with messaging noted here reflect individual perceptions rather than a comprehensive review of formal guidance to date.^[For instance, people acknowledged that multiple resources had been made available during the initial roll-out of the assessment.  One respondent noted that: *"The Department had trainers around the area, so there were presentations...there were quite a few of those"*  Nevertheless, a number of individuals were not aware of these resources and therefore noted a lack of clarity in messaging.]
+
+### Lack of clarity around how data will be used
+
+### Fear of use to decrease access to services
+
+### Mandate
+
+Lack of clarity in how to integrate into PCP process during initial rollout
+Lack of clarity around requirement of SIS
+Miscellaneous
+Communication with families could be improved
+Informing Service Availability
+MDHHS training available
+Perception of assessment as indicating lack of trust in supports coordinators
+Usefulness in service planning
+Process for requesting an updated assessment
+Usefulness to develop goals
+Recognition of limits
+Equity
+
+
+## Facilitation of SIS assessment
+
+Our focus here is on the process of the assessment only to the extent that it impacts the interpretation of the resulting dataset.  We are not evaluating the content of training about how the tool should be implemented but summarizing feedback from stakeholders about how they have experienced it.
+
+## Format of the SIS tool
+
+## Completeness of data
 
 # Guiding principles
 
