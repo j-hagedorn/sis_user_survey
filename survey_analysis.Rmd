@@ -368,24 +368,52 @@ use_pcp %>%
 
 A number of considerations were identified by focus group attendees during their dialogue.  These themes are summarized below.
 
-#### Integration into PCP process
+#### Integration into Process
 
 While this data may have potential, that potential remains untapped if it is not transformed into information and integrated into the actual PCP process for individuals receiving services.  Feedback from focus groups consistently stressed two things: 
 
-1. That this integration was crucial, and held one of the greatest areas of potential for use of the data.
-2. That this integration was far from being the standard of practice in current person-centered planning.
+* That this integration was crucial, and held one of the greatest areas of potential for use of the data.
+* That this integration was far from being the standard of practice in current person-centered planning.
 
 The excerpted feedback below attests to this:
 
-> *""*
+> *"It has aspects that can improve the PCP process. On the state level, we [as advocates] wanted to focus more on improving PCP process. Instead of just saying we have in law that PCP is how we drive services, if there could be a merging [of assessment data into a more consistent PCP process] that could be a beautiful thing."*
 
-For this integration to become a reality, several logistical issues will need to be resolved:
-
-**Consistent Integration into PCP Workflow**
+> *"SIS doesn’t come up in person-centered planning. We’re not told as supports coordinators that we need to integrate it into the process... Only when you start talking about authorizations does the SIS come up."*
 
 > *"We sat down for 90 minutes with a CM to make that connection. She’s the only one... that uses the SIS and aligns it with PCP. She’s tried to show new CM’s, and they’re like... well there’s just a lot that they have to do."*
 
-#### Overcoming preconceptions
+For this integration to become a reality, several related logistical issues will need to be resolved:
+
+1. Consistent Integration into PCP Process
+2. Consistent Integration into EMR Workflow supporting PCP Process
+3. Scheduling of Assessments to Align with PCP
+4. Consistent Training of Facilitators
+5. Guidance Regarding Use of Data in 2nd and 3rd Year after Initial Assessment
+
+#### Benefits of Use
+
+A number of distinct benefits were identified related to the use of assessment data in the person-centered planning process:  
+
+* Insight into individual needs and strengths for all treatment team members
+* The assessment was felt to be well aligned with the content of other assessments, and to provide support for these
+* The consistent identification of health and safety needs 
+* In addition to relatively stable needs, the assessment also allows for a focus on more dynamic needs which may change over time (e.g. behavioral needs)
+* Overcoming preconceptions of family members
+
+Feedback from respondents included the following:
+
+> *"It took 7 times of hearing my client say the same thing, the assessor acknowledged it, and then it clicked for me that it was a necessary goal. [I had spent] 13 years of working with that person without having that realization."*
+
+> *"We’re having the SIS and all this stuff is coming out about what she can do. By the time we have the PCP, the sister and consumer was able to come in and realize... if she has aspirations to do her own thing, she’s going towards that."*
+
+> *"A person who lives with their parent currently, being able to say 'It’s not that I can’t cook, it’s that you don’t allow me to do things.' ...Not what’s happening right now, but what could happen."*
+
+#### Caveats for Use
+
+In addition to the benefits noted above, several important cautions were communicated by respondents:
+
+* Mismatch between identified needs and personal preference
 
 ---
 
