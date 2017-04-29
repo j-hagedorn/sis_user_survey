@@ -1,17 +1,22 @@
 ---
 title: "Person-Centered Measurement"
-author: "Uses of Assessment Data to Inform Services for Individuals with Intellectual and Developmental Disabilities"
+author: Uses of Assessment Data to Inform Services for Individuals with Intellectual
+  and Developmental Disabilities
 output:
-  html_document: 
+  html_document:
+    self_contained: no
     theme: flatly
-    toc: true
-    toc_float: true
+    toc: yes
     toc_depth: 2
-    self_contained: false
+    toc_float: yes
+  word_document:
+    toc: yes
+    toc_depth: '2'
+always_allow_html: yes
 ---
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(dplyr); library(magrittr); library(tidyr); library(forcats); library(plotly); library(readxl)
+library(tidyverse); library(plotly); library(readxl); library(stringr); library(forcats); library(magrittr)
 
 # Read in focus group summary data
 sis_focus <- read_excel("focus_group_quotes.xlsx")
@@ -153,9 +158,9 @@ use_groups <- read.csv("use_groups.csv")
 
 # What is this report about?
 
-The Supports Intensity Scale (SIS®) is a standardized assessment tool implemented by the Michigan Department of Health and Human Services (MDHHS) for all Medicaid-eligible persons 18 and older who have intellectual or developmental disabilities (IDD) and who are currently receiving case management or supports coordination or respite-only services through the behavioral health system. Use of the tool began in July of 2014 and by September 30th of 2017 the intent is for all eligible individuals to have received an assessment.
+The Supports Intensity Scale (SIS®) is a standardized assessment tool required by the Michigan Department of Health and Human Services (MDHHS) for all Medicaid-eligible persons 18 and older who have intellectual or developmental disabilities (IDD) and who are currently receiving case management or supports coordination or respite-only services through the public behavioral health system. Use of the tool began in July of 2014, with the intent that all eligible individuals will receive an initial SIS assessment by September 30th, 2017.
 
-In anticipation of the completion of this initial implementation phase, MDHHS sought feedback from people receiving services and supports, their family members, advocates, prepaid inpatient health plan (PIHP) employees, community mental health (CMH) agencies and service providers regarding current and potential uses of the data from the SIS® assessment tool.
+In anticipation of the completion of this initial implementation phase, MDHHS sought feedback from people receiving services and supports, their family members, advocates, Prepaid Inpatient Health Plan (PIHP) employees, Community Mental Health (CMH) agencies and service providers regarding individuals’ experience with the SIS® assessment as well as current and potential uses of the data from the tool.
 
 This document is intended to accomplish two objectives: 
 
@@ -170,20 +175,24 @@ The guidance and thinking presented here is the result of substantial input from
 
 ## Focus Groups
 
-A series of focus groups were scheduled throughout the state for individuals with intellectual or developmental disabilities, their family members, and their Supports Coordinators/Case Managers. The purpose of these focus groups was to understand people's current use of data from the SIS® and to understand peoples feedback how the data might be used to inform the Person-Centered Planning process, ensuring that individuals receive supports and services according to their needs. Four focus groups were offered at locations throughout the state (*in Detroit, Petoskey, Kalamazoo, and Mount Pleasant*) to reach a broad audience and minimize travel time for attendees. 
+A series of focus groups were scheduled throughout the state for individuals with intellectual and/or developmental disabilities, their family members, and their Supports Coordinators/Case Managers. The purpose of these focus groups was to understand people's current use of data from the SIS® and to understand how information gathered during the assessment might be used to inform the Person-Centered Planning process, ensuring that individuals receive supports and services according to their needs. Four focus groups were offered at locations throughout the state (*in Detroit, Petoskey, Kalamazoo, and Mount Pleasant*) to reach a broad audience while minimizing travel time for attendees. 
+
+Participants in the Winter 2017 Self Determination Conference were also engaged in a focus group session and their responses are included here as well.
+
+A total of **x** people attended these focus groups ().  While people from multiple roles and areas across the system were in attendance, there was unfortunately a relatively low turn-out for individuals served and their family members. This is especially unfortunate, since the focus groups were intended to be the primary way of gathering personal feedback from persons served and their families, in lieu of the more formal survey.
 
 ## Survey
 
-[A survey](https://www.surveymonkey.com/r/Preview/?sm=O_2BNG1KDfFzgrTWySDftS7l01lFo5CEw11Po46B_2FKYGej_2FudfAYH_2BPr0I3SK4VNAg) was developed using *Survey Monkey* and sent by MDHHS staff via e-mail to each of the following groups on 2/1/2017:
+[A survey](https://www.surveymonkey.com/r/Preview/?sm=O_2BNG1KDfFzgrTWySDftS7l01lFo5CEw11Po46B_2FKYGej_2FudfAYH_2BPr0I3SK4VNAg) was developed using *Survey Monkey* and sent by MDHHS staff via e-mail to each of the following groups on February 1, 2017:
 
 * Advocates and Advocacy Organizations
 * Habilitation Support Waiver Leads
 * SIS® Assessors and Quality Leads
 * CEOs of CMHSP agencies (*for distribution to IDD staff*)
 
-A reminder e-mail was distributed on 3/14/17 in advance of the closing of the survey on 3/17/17.  
+A reminder e-mail was distributed on March 14, 2017 in advance of the closing of the survey on March 17, 2017.  
 
-The survey reviewed users from various roles regarding their current and potential future uses of the SIS® assessment data.^[The list of potential uses of the data which were included in the survey questions were originally identified by practitioners in the field and subsequently reviewed by MDHHS].  It also gathered feedback related to user experience with the tool and its implementation in Michigan.  
+The survey gathered feedback from users in various roles regarding their  experience with the tool and its implementation in Michigan as well as their current and potential future uses of the SIS® assessment data.^[The list of potential uses of the data which were included as response options in the survey questions were originally identified by practitioners in the field and subsequently reviewed by MDHHS].  
 
 `r n_distinct(sis_survey$RespondentID)` people responded to the survey from `r n_distinct(sis_survey$IP.Address)` locations across the state of Michigan. When asked which role best described their involvement in services for individuals with intellectual and developmental disabilities in Michigan, the respondents identified as follows:
 
@@ -202,7 +211,9 @@ sis_survey %>%
          yaxis = list(title = "Respondents in this role"))
 ```
 
-By far, the largest role represented in the responses is Supports Coordinator (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Supports Coordinator"])`), followed by directors of programs for IDD (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Program Director"])`) and SIS assessors (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "SIS Assessor or Quality Lead"])`).  All other roles had fewer than 10 responses.  Since Supports Coordinators are a crucial part of helping to translate an individual's assessed needs into a dialogue to inform person-centered planning and eventually authorizations for services, it is encouraging to have such a strong response in this area. 
+By far, the largest role represented in the responses is Supports Coordinator (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Supports Coordinator"])`), followed by directors of programs for IDD (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Program Director"])`) and SIS assessors (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "SIS Assessor or Quality Lead"])`).  All other roles had fewer than 10 responses.  
+
+Since Supports Coordinators are a crucial part of helping to translate an individual's assessed needs into a dialogue to inform person-centered planning and eventually authorizations for services, it is encouraging to have such a strong response in this area. 
 
 ## MDHHS Review
 
@@ -221,7 +232,7 @@ The contents of this report have also been reviewed by key staff members within 
 
 **Most common current uses**
 
-The chart below shows the number of respondents who indicated that they were already using the SIS assessment results to inform their work in a given area (i.e. they responded *"Currently using in my role"* to the specific item).
+The chart below shows the number of respondents who indicated that they were already using the SIS assessment results to inform their work in a given area (i.e. they responded *"Currently using in my role"* to the specific item). See [here](#surveyitems) for a more complete description of the survey items.^[The labels in the chart shown here are summaries of the text of the question from the survey.  To see a more detailed explanation of each, you can hover above the chart or look up the related explanation in the appendix here.]
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -234,10 +245,22 @@ using <-
 
 usable <-
   sis_survey %>%
-  select(role,starts_with("use_")) %>%
-  mutate_at(.cols = vars(starts_with("use_")),
-            .funs = funs(. %in% c("Currently using in my role","Could be useful in my role"))) %>%
-  gather(use, YorN, -role)
+  select(RespondentID,role,starts_with("use_")) %>%
+  mutate_at(
+    .cols = vars(starts_with("use_")),
+    .funs = funs(current = . %in% c("Currently using in my role"),
+                 could = . %in% c("Could be useful in my role"))) %>%
+  select(
+    RespondentID,
+    role,
+    ends_with("_current"), 
+    ends_with("_could")
+  ) %>%
+  gather(use, YorN, -role, -RespondentID) %>%
+  mutate(
+    when = ifelse(grepl("_current", use),"Current","Potential"),
+    use = gsub("_[^_]*$", "", use)
+  )
 
 using %>%
   group_by(use) %>%
@@ -257,7 +280,7 @@ using %>%
 
 ```
 
-A quick look at the responses shows that the most common use of SIS® data is to inform the individual plan of service (IPOS) and related tasks.  This is not surprising, given the large number of responses from Supports Coordinators
+Responses indicate that the most common use of SIS® data is to inform the individual plan of service (IPOS) and related tasks.  This is not surprising, given the large number of responses from Supports Coordinators
 
 **Current uses of data by role**
 
@@ -306,7 +329,7 @@ Knowing how respondents are already using the data is helpful, yet it may reflec
 
 ```
 
-Indeed, it is likely that many potential uses were not even listed in the survey responses.  As with any resource, people will use data for ingenious and unpredictable purposes.  For this reason, it is important that there be principles to guide the use of this data across the system.
+Indeed, it is likely that many potential uses were not identified in the survey responses.  As with any resource, people will use data for ingenious and unpredictable purposes.  For this reason, it is important that there be principles to guide the use of this data across the system.
 
 ---
 
@@ -329,13 +352,14 @@ Since person-centered planning is central to the entire system of services and s
 
 Assessment data might be used in the following ways to support person-centered planning:
 
-* Recommend individual needs to inform an individualized plan of service (IPOS)
+* Recommend individual support needs to inform an individualized plan of service (IPOS)
 * Identify potential goals and objectives for inclusion in the IPOS
 * Identify potential referrals for additional assessments or relevant services
 * Help guide safety planning by identifying areas of risk
-* Design an individualized menu of services to support an individual to live in the community
+* Design an individualized menu of services to support an individual to live independently in the community
 * Identify individual strengths for inclusion in the IPOS
 * Provide guidance regarding supports which may provide alternatives to guardianship
+* Identify areas of specific personal interest or areas the individual wishes to focus on
 
 ### Current and Potential Usage
 
@@ -345,22 +369,31 @@ The chart below shows the number of respondents who indicated that the data from
 # using a stacked bar chart with one bar for specific use and stacked by role, intended or potential uses by role
 
 use_pcp %>%
-  group_by(short_desc,long_desc,role) %>%
-  summarize(n = sum(YorN)) %>%
+  group_by(short_desc,long_desc,when) %>%
+  summarize(n = sum(YorN),
+            responders = n_distinct(RespondentID)) %>%
   ungroup() %>%
-  mutate(short_desc = fct_reorder(short_desc, n, .desc = T)) %>%
-  plot_ly(x = ~short_desc, y = ~n, color = ~role,
-          hoverinfo = 'text',
-          text = ~paste(n,
-                        " respondents in the role of <br>",
-                        role,
-                        " indicate the data may be relevant to <br>",
-                        long_desc)) %>% 
-  add_bars() %>% 
-  layout(margin = list(b = 150),
-         barmode = 'stack',
-         xaxis = list(title = "", tickangle = 45),
-         yaxis = list(title = "Respondents indicating relevance"))
+  mutate(
+    pct = n / responders * 100,
+    short_desc = fct_reorder(short_desc, n, .desc = T)
+  ) %>%
+  plot_ly(
+    x = ~short_desc, 
+    y = ~pct, 
+    color = ~when,
+    hoverinfo = 'text',
+    text = ~paste(n, " out of ", responders," respondents (",
+                  round(pct, digits = 1),"%)<br>",
+                  "identified",ifelse(when == "Current","current","potential"),
+                  " use of the data to<br>",long_desc)
+  ) %>% 
+  add_bars(colors = c("#132B43", "#56B1F7")) %>% 
+  layout(
+    margin = list(b = 150),
+    barmode = 'stack',
+    xaxis = list(title = "", tickangle = 45),
+    yaxis = list(title = "% indicating relevance", range = c(0, 100))
+  )
 
 ```
 
@@ -448,22 +481,31 @@ The chart below shows the number of respondents who indicated that the data from
 # using a stacked bar chart with one bar for specific use and stacked by role, intended or potential uses by role
 
 use_prov %>%
-  group_by(short_desc,long_desc,role) %>%
-  summarize(n = sum(YorN)) %>%
+  group_by(short_desc,long_desc,when) %>%
+  summarize(n = sum(YorN),
+            responders = n_distinct(RespondentID)) %>%
   ungroup() %>%
-  mutate(short_desc = fct_reorder(short_desc, n, .desc = T)) %>%
-  plot_ly(x = ~short_desc, y = ~n, color = ~role,
-          hoverinfo = 'text',
-          text = ~paste(n,
-                        " respondents in the role of <br>",
-                        role,
-                        " indicate the data may be relevant to <br>",
-                        long_desc)) %>% 
-  add_bars() %>% 
-  layout(margin = list(b = 150),
-         barmode = 'stack',
-         xaxis = list(title = "", tickangle = 45),
-         yaxis = list(title = "Respondents indicating relevance"))
+  mutate(
+    pct = n / responders * 100,
+    short_desc = fct_reorder(short_desc, n, .desc = T)
+  ) %>%
+  plot_ly(
+    x = ~short_desc, 
+    y = ~pct, 
+    color = ~when,
+    hoverinfo = 'text',
+    text = ~paste(n, " out of ", responders," respondents (",
+                  round(pct, digits = 1),"%)<br>",
+                  "identified",ifelse(when == "Current","current","potential"),
+                  " use of the data to<br>",long_desc)
+  ) %>% 
+  add_bars(colors = c("#132B43", "#56B1F7")) %>% 
+  layout(
+    margin = list(b = 150),
+    barmode = 'stack',
+    xaxis = list(title = "", tickangle = 45),
+    yaxis = list(title = "% indicating relevance", range = c(0, 100))
+  )
 
 ```
 
@@ -488,30 +530,41 @@ Of all the potential uses of data from the SIS® assessment, this was one of the
 
 ### Specific Use Cases
 
- 
+
 
 ### Current and Potential Usage
+
+The chart below shows the number of respondents who indicated that the data from the assessment could be relevant for them in their current roles (i.e. they responded either *"Currently using in my role"* or *"Could be useful in my role"* to the specific item).
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # using a stacked bar chart with one bar for specific use and stacked by role, intended or potential uses by role
 
 use_um %>%
-  group_by(short_desc,long_desc,role) %>%
-  summarize(n = sum(YorN)) %>%
+  group_by(short_desc,long_desc,when) %>%
+  summarize(n = sum(YorN),
+            responders = n_distinct(RespondentID)) %>%
   ungroup() %>%
-  mutate(short_desc = fct_reorder(short_desc, n, .desc = T)) %>%
-  plot_ly(x = ~short_desc, y = ~n, color = ~role,
-          hoverinfo = 'text',
-          text = ~paste(n,
-                        " respondents in the role of <br>",
-                        role,
-                        " indicate the data may be relevant to <br>",
-                        long_desc)) %>% 
-  add_bars() %>% 
-  layout(margin = list(b = 150),
-         barmode = 'stack',
-         xaxis = list(title = "", tickangle = 45),
-         yaxis = list(title = "Respondents indicating relevance"))
+  mutate(
+    pct = n / responders * 100,
+    short_desc = fct_reorder(short_desc, n, .desc = T)
+  ) %>%
+  plot_ly(
+    x = ~short_desc, 
+    y = ~pct, 
+    color = ~when,
+    hoverinfo = 'text',
+    text = ~paste(n, " out of ", responders," respondents (",
+                  round(pct, digits = 1),"%)<br>",
+                  "identified",ifelse(when == "Current","current","potential"),
+                  " use of the data to<br>",long_desc)
+  ) %>% 
+  add_bars(colors = c("#132B43", "#56B1F7")) %>% 
+  layout(
+    margin = list(b = 150),
+    barmode = 'stack',
+    xaxis = list(title = "", tickangle = 45),
+    yaxis = list(title = "% indicating relevance", range = c(0, 100))
+  )
 
 ```
 
@@ -536,26 +589,37 @@ use_pop <-
 
 ### Current and Potential Usage
 
+The chart below shows the number of respondents who indicated that the data from the assessment could be relevant for them in their current roles (i.e. they responded either *"Currently using in my role"* or *"Could be useful in my role"* to the specific item).
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # using a stacked bar chart with one bar for specific use and stacked by role, intended or potential uses by role
 
 use_pop %>%
-  group_by(short_desc,long_desc,role) %>%
-  summarize(n = sum(YorN)) %>%
+  group_by(short_desc,long_desc,when) %>%
+  summarize(n = sum(YorN),
+            responders = n_distinct(RespondentID)) %>%
   ungroup() %>%
-  mutate(short_desc = fct_reorder(short_desc, n, .desc = T)) %>%
-  plot_ly(x = ~short_desc, y = ~n, color = ~role,
-          hoverinfo = 'text',
-          text = ~paste(n,
-                        " respondents in the role of <br>",
-                        role,
-                        " indicate the data may be relevant to <br>",
-                        long_desc)) %>% 
-  add_bars() %>% 
-  layout(margin = list(b = 150),
-         barmode = 'stack',
-         xaxis = list(title = "", tickangle = 45),
-         yaxis = list(title = "Respondents indicating relevance"))
+  mutate(
+    pct = n / responders * 100,
+    short_desc = fct_reorder(short_desc, n, .desc = T)
+  ) %>%
+  plot_ly(
+    x = ~short_desc, 
+    y = ~pct, 
+    color = ~when,
+    hoverinfo = 'text',
+    text = ~paste(n, " out of ", responders," respondents (",
+                  round(pct, digits = 1),"%)<br>",
+                  "identified",ifelse(when == "Current","current","potential"),
+                  " use of the data to<br>",long_desc)
+  ) %>% 
+  add_bars(colors = c("#132B43", "#56B1F7")) %>% 
+  layout(
+    margin = list(b = 150),
+    barmode = 'stack',
+    xaxis = list(title = "", tickangle = 45),
+    yaxis = list(title = "% indicating relevance", range = c(0, 100))
+  )
 
 ```
 
@@ -563,12 +627,51 @@ use_pop %>%
 
 ## Use in Advocacy
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Subset use responses
+use_advoc <-
+  usable %>%
+  filter(role == "Advocate") %>%
+  left_join(column_key, by = c("use" = "col_name")) %>%
+  left_join(use_groups, by = "short_desc") 
+
+```
+
 ### Specific Use Cases
+
+Advocates perform a role with a broad scope.  Since their interest is in the individual person's quality of life, they might become interested in any of the uses of the assessment mentioned above, but from the specific perspective of the impact on the individual. 
 
 ### Current and Potential Usage
 
-```{r}
-# using a stacked bar chart with one bar for specific use and stacked by role, intended or potential uses by role
+The chart below shows the number of advocates who indicated that the data from the assessment could be relevant for them in their current roles (i.e. they responded either *"Currently using in my role"* or *"Could be useful in my role"* to the specific item).
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+use_advoc %>%
+  group_by(use_group,short_desc,long_desc) %>%
+  summarize(n = sum(YorN),
+            responders = n_distinct(RespondentID)) %>%
+  ungroup() %>%
+  mutate(
+    pct = n / responders * 100,
+    short_desc = fct_reorder(short_desc, n, .desc = T)
+  ) %>%
+  plot_ly(
+    x = ~short_desc, 
+    y = ~pct, 
+    color = ~use_group,
+    hoverinfo = 'text',
+    text = ~paste(n, " out of ", responders," advocates identified<br>",
+                  "current or potential use of the data to<br>",long_desc)
+  ) %>% 
+  add_bars() %>% 
+  layout(
+    margin = list(b = 150),
+    xaxis = list(title = "", tickangle = 45),
+    yaxis = list(title = "% indicating relevance", range = c(0, 100))
+  )
+
 ```
 
 ### Considerations
@@ -577,7 +680,7 @@ use_pop %>%
 
 # What issues impact use of the data?
 
-While data is stored in databases and defined in specifications, the *meaning* of the data is influenced by any number of issues which 
+While data is stored in databases and defined in specifications, the *meaning* of the data is influenced by any number of issues which include perceptions of those collecting, analyzing and disseminating the data, and how the data is explained. 
 
 ## Messaging related to use of the SIS
 
@@ -615,7 +718,26 @@ Our focus here is on the process of the assessment only to the extent that it im
 
 While there are some basic ethical principles guiding the use of this data for any purpose, one of the guiding principles of the questions we asked was that uses of the data should be defined by role.  For instance, while we may not want a supports coordinator using SIS data by itself to determine medical necessity for services at the individual level, it may be entirely appropriate for a provider network manager to use the same data to explore whether there are enough services in a given area to meet the needs of the entire population served.  The *role* which is using the data matters.
 
-Skepticism
+# Appendix A: Survey Items {#surveyitems}
+
+The table below shows more detailed descriptions of the survey items which are referenced in the charts throughout this document.  These descriptions can also be seen by hovering over the charts in the web version of the report.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+library(DT)
+
+column_key %>%
+  filter(grepl("^use_", col_name)) %>%
+  select(short_desc, long_desc) %>%
+  datatable(
+    caption = 'Shortened Descriptions of Assessment Uses',
+    colnames = c('Short Name', 'Survey Response Detail'),
+    rownames = FALSE,
+    options = list(dom = 't',pageLength = 16)
+  )
+
+```
+
 
 
 
