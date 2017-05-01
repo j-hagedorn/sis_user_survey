@@ -186,7 +186,7 @@ Current state of implementation (Promise still in the process of being kept)
 
 ---
 
-# What is this report about?
+# Context and Purpose
 
 The Supports Intensity Scale (SIS®) is a standardized assessment tool required by the Michigan Department of Health and Human Services (MDHHS) for all Medicaid-eligible persons 18 and older who have intellectual or developmental disabilities (IDD) and who are currently receiving case management or supports coordination or respite-only services through the public behavioral health system. Use of the tool began in July of 2014, with the intent that all eligible individuals will receive an initial SIS assessment by September 30th, 2017.
 
@@ -205,11 +205,13 @@ The guidance and thinking presented here is the result of substantial input from
 
 ## Focus Groups
 
-A series of focus groups were scheduled throughout the state for individuals with intellectual and/or developmental disabilities, their family members, and their Supports Coordinators/Case Managers. The purpose of these focus groups was to understand people's current use of data from the SIS® and to understand how information gathered during the assessment might be used to inform the Person-Centered Planning process, ensuring that individuals receive supports and services according to their needs. Four focus groups were offered at locations throughout the state (*in Detroit, Petoskey, Kalamazoo, and Mount Pleasant*) to reach a broad audience while minimizing travel time for attendees. [Focus group feedback](#focuscomments) was captured in notes taken during the groups and subsequently grouped into related themes to inform this paper.
+A series of focus groups were scheduled throughout the state for individuals with intellectual and/or developmental disabilities, their family members, and their Supports Coordinators/Case Managers. The purpose of these focus groups was to understand people's current use of data from the SIS® and to understand how information gathered during the assessment might be used to inform the Person-Centered Planning process, ensuring that individuals receive supports and services according to their needs. 
+
+Four focus groups were offered at locations throughout the state (*in Detroit, Petoskey, Kalamazoo, and Mount Pleasant*) in order to reach a broad audience while minimizing travel time for attendees. [Focus group feedback](#focuscomments) was captured in notes taken during the groups and subsequently grouped into related themes to inform this paper.
 
 Participants in the Winter 2017 Self Determination Conference were also engaged in a focus group session and their responses are included here as well.
 
-A total of **x** people attended these focus groups ().  While people from multiple roles and areas across the system were in attendance, there was unfortunately a relatively low turn-out for individuals served and their family members. This is especially unfortunate, since the focus groups were intended to be the primary way of gathering personal feedback from persons served and their families, in lieu of the more formal survey.
+A total of **x** people attended these focus groups ().  While people from multiple roles and areas across the system were in attendance, there was unfortunately a relatively low turn-out for individuals served and their family members. This is particularly unfortunate, since the focus groups were intended to be the primary way of gathering personal feedback from persons served and their families, in lieu of the more formal survey.
 
 ## Survey
 
@@ -245,6 +247,8 @@ By far, the largest role represented in the responses is Supports Coordinator (n
 
 Since Supports Coordinators are a crucial part of helping to translate an individual's assessed needs into a dialogue to inform person-centered planning and eventually authorizations for services, it is encouraging to have such a strong response in this area. 
 
+The high response rate of program directors (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Program Director"])`) is also encouraging, especially with regards to potential use of the assessment data to [manage networks of providers](#use_manage) and their programs.
+
 ## MDHHS Review
 
 The contents of this report have also been reviewed by key staff members within MDHHS, including:
@@ -262,16 +266,9 @@ The contents of this report have also been reviewed by key staff members within 
 
 ### Most common current uses
 
-The chart below shows the number of respondents who indicated that they were already using the SIS assessment results to inform their work in a given area (i.e. they responded *"Currently using in my role"* to the specific item). See [here](#surveyitems) for a more complete description of the survey items.^[The labels in the chart shown here are summaries of the text of the question from the survey.  To see a more detailed explanation of each, you can hover above the chart or look up the related explanation in the appendix here.]
+The chart below shows the number of respondents who indicated that they were currently using the SIS assessment results to inform their work in a given area (i.e. they responded *"Currently using in my role"* to the specific item) or that they believed the information was potentially useful for their work (i.e. they responded *"Could be useful in my role"* to the specific item). See [here](#surveyitems) for a more complete description of each of the survey items.^[The labels in the chart shown here are summaries of the text of the question from the survey.  To see a more detailed explanation of each, you can hover above the chart or look up the related explanation in the appendix.]
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-
-using <-
-  sis_survey %>%
-  select(role,starts_with("use_")) %>%
-  mutate_at(.cols = vars(starts_with("use_")),
-            .funs = funs(. == "Currently using in my role")) %>%
-  gather(use, YorN, -role)
 
 usable <-
   sis_survey %>%
@@ -292,40 +289,56 @@ usable <-
     use = gsub("_[^_]*$", "", use)
   )
 
-using %>%
-  group_by(use) %>%
-  summarize(n = sum(YorN)) %>%
-  ungroup() %>%
+usable %>%
   left_join(column_key, by = c("use" = "col_name")) %>%
-  droplevels() %>% ungroup() %>%
-  mutate(short_desc = fct_reorder(short_desc, n, .desc = T)) %>%
-  plot_ly(x = ~short_desc, y = ~n,
-          hoverinfo = 'text',
-          text = ~paste(n," respondents report using the data to <br>",
-                        long_desc)) %>% 
-  add_bars() %>% 
-  layout(margin = list(b = 150),
-         xaxis = list(title = "", tickangle = 45),
-         yaxis = list(title = "Respondents currently using"))
+  group_by(short_desc,long_desc,when) %>%
+  summarize(
+    n = sum(YorN),
+    responders = n_distinct(RespondentID)
+  ) %>%
+  ungroup() %>%
+  mutate(
+    pct = n / responders * 100,
+    short_desc = fct_reorder(short_desc, n, .desc = T)
+  ) %>%
+  plot_ly(
+    x = ~short_desc, 
+    y = ~n, 
+    color = ~when,
+    hoverinfo = 'text',
+    text = ~paste(n, " out of ", responders," respondents (",
+                  round(pct, digits = 1),"%)<br>",
+                  "identified",ifelse(when == "Current","current","potential"),
+                  " use of the data to<br>",long_desc)
+  ) %>% 
+  add_bars(colors = c("#132B43", "#56B1F7")) %>% 
+  layout(
+    margin = list(b = 150),
+    barmode = 'stack',
+    xaxis = list(title = "", tickangle = 45),
+    yaxis = list(title = "Number indicating relevance")
+  )
 
 ```
 
-Responses indicate that the most common use of SIS® data is to inform the individual plan of service (IPOS) and related tasks.  This is not surprising, given the large number of responses from Supports Coordinators.
+Responses indicate that the most common use of SIS® data is to inform the individual plan of service (IPOS) and related tasks.  This is not surprising, given the large number of responses from Supports Coordinators.  
+
+Certain uses of the assessment have been engaged more actively in respondents' current practice.  For example, the use of the information from the assessment to identify potential goals for person-centered planning had a greater number of respondents indicating *current* use than *potential* use.  On the other hand, many fewer respondents indicated that they were *currently* using the data to identify new locations to make services available, though a number of respondents endorsed this as a *potential* use.
 
 ### Current uses of data by role
 
-One of the guiding principles of the questions on the survey was that uses of the data should be defined by role.  For instance, while it would be inappropriate for a supports coordinator to use solely SIS data to determine medical necessity for an individual's services, it may be entirely appropriate for a provider network manager to use the data to explore whether there are enough services in a given area to meet the needs of the entire population served.  The *role* which is using the data, and the *use* to which it is put, matters.
+One of the principles informing the questions on the survey was that uses of the data could be meaningfully grouped by the role of the individual using the data.  For instance, while it would be inappropriate for a supports coordinator to use solely SIS data to determine medical necessity for an individual's services, it may be entirely appropriate for a provider network manager to use the data to explore whether there are enough services in a given area to meet the needs of the entire population served.  The *role* which is using the data, and the *use* to which it is put, matters.
 
-The visual below provides a summary of how survey respondents in specific roles said they were using the data.  In the chart, a darker blue means that a higher percent of respondents indicated they were currently using SIS data for a particular purpose.^[While the survey clearly asked respondents "How could the data from the SIS® assessment *help you to perform your role*?", it is not clear that individuals consistently responded with this guidance in mind.  Thus, a number of respondents indicated using the assessment for a purpose which clearly falls outside the scope of their role.  Furthermore, the feedback from focus groups was not captured as structured data in a way that the specific type of use to be tied to a specific role. For this reason we have not structured the subsequent sections by role.]
+The visual below provides a summary of how survey respondents in specific roles indicated they were using the data.  In the chart, a darker blue means that a higher percent of respondents indicated they were currently using SIS data for a particular purpose or could potentially use the information for that purpose.^[While the survey clearly asked respondents "How could the data from the SIS® assessment *help you to perform your role*?", it is not clear that individuals consistently responded with this guidance in mind.  Thus, a number of respondents indicated using the assessment for a purpose which clearly falls outside the scope of their role.  Furthermore, the feedback from focus groups was not captured as structured data in a way that the specific type of use to be tied to a specific role. For this reason we have not structured the subsequent sections by role.]
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
-tst <- 
-using %>%
+by_role <- 
+usable %>%
   group_by(role, use) %>%
   summarize(n = sum(YorN),
             total = n()) %>%
-  mutate(pct = n / total) %>%
+  mutate(pct = round(n / total * 100, digits = 1)) %>%
   ungroup() %>%
   left_join(column_key, by = c("use" = "col_name")) %>%
   select(short_desc,role,pct) %>%
@@ -334,36 +347,35 @@ using %>%
   spread(role,pct) %>%
   ungroup()
 
-tst %>%
+by_role %>%
   select(-short_desc) %>%
-  mutate_all(.funs = funs(round(. * 100, digits = 1))) %>%
   as.matrix() %>%
-  plot_ly(x = colnames(.), 
-          y = tst$short_desc, 
-          z = ., 
-          type = "heatmap",
-          colors = "Blues") %>% 
-  layout(margin = list(l = 170, b = 150),
-         xaxis = list(title = "Role", tickangle = 45),
-         yaxis = list(title = "Type of Use"))
+  plot_ly(
+    x = colnames(.), 
+    y = by_role$short_desc, 
+    z = ., 
+    type = "heatmap",
+    colors = "Blues"
+  ) %>%
+  colorbar(
+    title = "Percent (%)",
+    limits = c(0, 100)
+  )%>% 
+  layout(
+    margin = list(l = 170, b = 150),
+    xaxis = list(title = "Role", tickangle = 45),
+    yaxis = list(title = "Type of Use")
+  )
 
 ```
 
+We should note that this summary does not pretend to list all of the potential users or uses of this information. It is likely that many potential uses were not identified in the survey responses.  As with any resource, data can be used for ingenious and unpredictable purposes.  For this reason, it is important that there be principles to guide the use of this data across the system. 
 
+These principles will be embodied in various specific uses, and various stakeholders noted the need for specific uses to be identified to support their implementation of the the information in practice.  The request by this focus group participant was echoed multiple times:
 
-**If people are not using the data, why not?**
+> *"Will you publish other ways it can be used? One of reasons I’m here is to look at ways across the board. We’re looking for innovation in how we can use the information."*
 
-```{r}
-
-```
-
-Knowing how respondents are already using the data is helpful, yet it may reflect only a few of the full range of potential uses for this data. The chart below shows the proportion of respondents who indicated that a particular use of the data would be relevant for their role.
-
-```{r}
-
-```
-
-Indeed, it is likely that many potential uses were not identified in the survey responses.  As with any resource, people will use data for ingenious and unpredictable purposes.  For this reason, it is important that there be principles to guide the use of this data across the system.  The specific uses outlined in the next several sections identify promising areas for use of this information across various
+The specific uses outlined in the next several sections identify promising areas for use of this information across various roles and areas of the behavioral health system in Michigan.
 
 ---
 
@@ -535,9 +547,13 @@ In addition to the benefits noted above, several important cautions were communi
 * _Personal priorities change_: While the SIS assessment allows a person to tag specific support areas as *"important to"* them, focus group participants cautioned that these items should not be interpreted as accurate indicators of a person's current priorities, since these will naturally change with time.
 * _Mismatch between needs and preference_: While the SIS assessment identifies both support needs and individual preferences (*in the form of "important to" items tagged in the assessment*), the relationship between these is not always straightforward to interpret.  For instance, a person may "need" a high level of supports in employment, but this would not be relevant for individual planning if the person was not interested in pursuing employment.  On the other hand, essential safety-related items (*eating, for example*) may need to be incorporated into the person-centered planning process even if they are not explicitly endorsed by the person.
 
+As one focus group member summarized:
+
+> *"We need to remember that the value of the information from the assessment is not a substitute for getting to know a person. There is nothing that replaces investing in other people and caring about them. To think that a tool is going to do that...it’s just not."*
+
 ---
 
-## Use in Managing a Provider Network
+## Use in Managing a Provider Network {#use_manage}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -552,7 +568,7 @@ use_prov <-
 
 ### Specific Types of Use
 
-Tailoring services to the needs of a specific individual is a hallmark of person-centered planning, but there is an additional level of complexity required to support the design of provider networks to meet the precise needs of the populations they serve.  Assessment data from the SIS® has been identified as having potential applications in the following areas related to provider network management:
+Tailoring services to the needs of a specific individual is a hallmark of person-centered planning, but there is an additional level of complexity required to support the design of provider networks to meet the precise needs of the populations they serve.  Assessment data from the SIS® has been identified as having potential applications for the following activities related to provider network management:
 
 * Inform the development of provider network service offerings. 
 * Evaluate provider network adequacy relative to the specific needs of the population in a given area.         
@@ -637,7 +653,7 @@ It will be important to continue to share ways in which individual needs and int
 
 ---
 
-## Use in Assuring Access and Equity
+## Use in Assuring Access and Equity {#access}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -652,7 +668,7 @@ use_um <-
 
 ### Specific Types of Use
 
-Of all the potential uses of data from the SIS® assessment, this was one of the most commonly endorsed during focus group forums.  Assessment data from the SIS® has been identified as having potential applications in the following areas related to assuring access to services and ensuring equity of access for all persons receiving services:
+Of all the potential uses of data from the SIS® assessment, this was one of the most commonly endorsed during focus group forums.  Assessment data from the SIS® has been identified as having potential applications in the following areas related to assuring access to services and ensuring the equity of access for all persons receiving services:
 
 * Ensure people receive the services they need 
 * Identify services inconsistent with assessed needs
@@ -725,9 +741,11 @@ Respondents from various roles acknowledged this tension when describing their c
 
 > *"When I know that the SIS is going to be compiled and go to money-makers... there’s people at the local level that can allocate resources in a more independent way..."*
 
+> *"There are conflicting mindsets that are trying to be balanced: We have this pot of money and we need to distribute it vs. we need to provide what is needed to the population."*
+
 ---
 
-## Use in Understanding Population Needs
+## Use in Understanding Populations
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -785,6 +803,10 @@ use_pop %>%
 ```
 
 ### Considerations
+
+Specifically relevant in relation to the [Home and Community Based Services (HCBS) Final Rule](https://www.federalregister.gov/d/2014-00487) and the [Medicaid and CHIP Managed Care Final Rule](https://www.federalregister.gov/d/2016-09581)
+
+---
 
 ## Use in Advocacy
 
@@ -847,35 +869,67 @@ use_advoc %>%
 
 ## Inappropriate Uses
 
-# What issues impact use of the data?
+Informing Service Availability
+Providing responses in a way which justifies authorizations
+Use of assessment outside of PCP process
+
+> *"Because there hasn’t been good guidance on what are we supposed to do now that we have the data, which leaves people to interpret it for themselves and develop grids which wrongly link a score to a specific service."*
+
+---
+
+# Related Issues
 
 While data is stored in databases and defined in specifications, the *meaning* of the data is influenced by any number of issues which include perceptions of those collecting, analyzing and disseminating the data, and how the data is explained. 
 
-## Messaging related to use of the SIS
+The following sections outline various issues related to the diffusion and adoption of the SIS assessment and the use of data derived from the assessment to inform decision-making at the individual, program, and population levels.  Implementation of any change is influenced by several factors:^[These factors are adapted from work in the diffusion of innovations.  For more information see: *Rogers, Everett (16 August 2003). Diffusion of Innovations, 5th Edition. Simon and Schuster.*]
 
-It is worth noting that, during the focus groups, respondents did not draw a clear line between the official messaging provided by MDHHS and the informal messaging communicated within their own organizations or teams.  The issues with messaging noted here reflect individual perceptions rather than a comprehensive review of formal guidance to date.^[For instance, people acknowledged that multiple resources had been made available during the initial roll-out of the assessment.  One respondent noted that: *"The Department had trainers around the area, so there were presentations...there were quite a few of those"*  Nevertheless, a number of individuals were not aware of these resources and therefore noted a lack of clarity in messaging.]
+* [communication channels](#communication)
+* [aspects of the change being implemented](#aspects)
+* [time](#time)
+* [relationships between stakeholder groups](#groups)
 
-### Lack of clarity around how data will be used
+Each of these factors is addressed below, using feedback gathered from both the survey and focus groups.
 
-### Fear of use to decrease access to services {#fearlimit}
+## Communication and Messaging {#communication}
 
-### Mandate
+The use of standard assessment information is an innovation that is being implemented between multiple people and organizations. For this reason, communication is crucially important. This communication includes both official written communication and training from MDHHS as well as informal communication between various individuals and organizations.
 
-Lack of clarity in how to integrate into PCP process during initial rollout
-Lack of clarity around requirement of SIS
-Miscellaneous
-Communication with families could be improved
-Informing Service Availability
-MDHHS training available
-Perception of assessment as indicating lack of trust in supports coordinators
-Usefulness in service planning
-Process for requesting an updated assessment
-Usefulness to develop goals
-Recognition of limits
-Equity
+It is worth noting that, during the focus groups, respondents did not draw a clear line between the official messaging provided by MDHHS and the informal messaging communicated within their own organizations or teams.  The issues with messaging noted here reflect individual perceptions rather than a comprehensive review of formal guidance to date.^[For instance, people acknowledged that multiple resources had been made available during the initial roll-out of the assessment.  One respondent noted that: *"The Department had trainers around the area, so there were presentations...there were quite a few of those"*  Nevertheless, a number of individuals were not aware of these resources and therefore noted a lack of clarity in messaging.]  Specific themes related to the ways in which people received and conveyed SIS messaging included:
+
+* **Usefulness in identifying goals and service planning**
+* **Usefulness to support equitable access to services**:  As noted in the [discussion above](#access), the interpretation of equity depends upon how it impacts one's individual experience.
+* **Lack of clarity around how data will be used**: 
+* Fear of use to decrease access to services 
+* Mandate without articulated value
+* Lack of clarity in how to integrate into PCP process during initial rollout
+* Lack of clarity around requirement of SIS
 
 
-## Facilitation of SIS assessment
+> *"I would not want it to be used to cut services that are deemed to be necessary for my daughter’s support."*
+
+> *"Feel like you have to make people sound so bad off or negatively in order to secure the necessary services, when I want to talk positively about the progress that I’ve made."*
+
+> *"The fear [of the SIS being used to cut services] sets people up to focus on the deficits. The reality is that some CMHs have used the SIS to cut services and while the department has addressed this, it remains the case."*
+
+> *"Guardians come in and they’re comfortable with where their individual is at, so it becomes fear-based... We have to do a lot of comfort[ing] along the way to get people to participate. Sometimes the staff and myself will sit in on the assessment to protect older guardians from fear."*
+
+> *"My first thought as a consumer was, if I don’t do this, I might lose services, or not be able to be a peer mentor"*
+
+> *"Difficult to explain to my consumers when they’ve already had an assessment with me. Explained that everyone is doing this, your name just happened to be pulled"*
+
+> *"The state’s making us do it."*
+
+> *"Initially described as mandated… you wouldn’t receive services if you didn’t take it. Didn’t know that a person could opt out. The message that was sent out there was bye-bye CMH services."*
+
+
+
+
+
+---
+
+## Aspects of the Assessment & Data {#aspects}
+
+### Facilitation 
 
 One of the primary experiences which impacts the implementation and interpretation of the SIS assessment data is the experience which they have had with facilitation of the assessment, or what has been communicated to them by others about this experience.^[Please note that the focus of this paper treats the process of the assessment only to the extent that it impacts the interpretation of the resulting dataset or the willingness of the broader system to use the data.  This is not an evaluation of the content of training about how the tool should be implemented, but a summary of feedback from stakeholders about how they have experienced it.]
 
@@ -925,11 +979,43 @@ Overall, people's experience of the facilitation of the SIS assessment appeared 
 
 That being said, it is worth noting that the majority of respondents who had participated in a SIS assessment indicated that the results of the assessment were clear and that they had a better understanding of the person being assessed as a result.
 
-## Format of the SIS tool
+### Format of the SIS tool
 
-## Completeness of data
+Several issues related to the structure and format of the tool itself were raised repeatedly by participants.  Most of the issues noted here were part of a two-sided discussion, with some individuals noting difficulties of the format while others acknowledged an understanding of the reasons for these attributes of the assessment.
 
-# Supplement A: Survey Items {#surveyitems}
+* **The use of hypothetical questions**: The most common issue noted was the use of a hypothetical scenario to cue survey responses (i.e. *what supports would it take if you lived independently in the community?*).  This approach was noted to have the effect of raising discrepancies between individual or family hopes and the reality of the person's current situation.  In some instances this was perceived as empowering, while in others it was perceived as insulting.  The approach also impacts interpretation of the data, since a high level of need in a particular area of need may not be require allocation of resources if the person is not currently engaging that need *in the community*.
+* **Required to answer all questions**: Participants consistently mentioned the length of the assessment, which requires that all questions be answered.  The benefits of this approach are that it (*a*) allows for the collection of standardized data across all domains for each person assessed, and (*b*) prompts discussion regarding life areas where an individual and their supports may have different perceptions.  The downside of this approach was that questions were often felt to be irrelevant or uncomfortable and not adaptive to observable facts about the person (e.g. asking about certain medical needs).
+* **Focus on limitations**: While acknowledging the need for an assessment to identify needs in order to support the medical necessity of services, some participants were concerned that this deficit-based approach would increase as use of the data increased.  This was compounded by the existence of similar questions on other existing assessments. As one individual noted: *"We already know we can’t do stuff, why again with this?"* 
+* **Unclear summary/interpretation of output**: Participants noted that the summary output from the assessment was not especially informative at the individual level.  One person shared that *"the disconnect was when we got the results back, and said, how do we use these? ...there wasn’t a clear score, not sure of next steps."*  
+
+### Response Burden
+
+Participants in 
+Time to complete
+Duplication of items from other assessments
+
+
+---
+
+## Timeline {#time}
+
+* Required MDHHS timeline
+* External timelines 
+* Interval for reassessment
+
+> *"At some point, it becomes a compliance issue just to get these assessments done, and you don’t have the time to do what you want with the info. I’m here to see how we can use the data we get from the system to create something spectacular. Right now it’s almost saturation... they don’t meet somewhere in between."*
+
+---
+
+## Relationship Between Stakeholder Groups {#groups}
+
+Perception of assessment as indicating lack of trust in supports coordinators
+
+---
+
+# Supplements
+
+## Survey Items {#surveyitems}
 
 The table below shows more detailed descriptions of the survey items which are referenced in the charts throughout this document.  These descriptions can also be seen by hovering over the charts in the web version of the report.
 
@@ -949,7 +1035,9 @@ column_key %>%
 
 ```
 
-# Supplement B: Focus Group Comments {#focuscomments}
+---
+
+## Focus Group Comments {#focuscomments}
 
 The searchable table below includes all comments captured in notes during the focus group sessions.  These have been grouped together and classified by themes and by the type of usage they relate to.  In certain cases, quotes are paraphrased based on what could be captured by the notetaker during the session.  Some comments may not have been captured due to the pace of the conversation during portions of the focus groups.
 
