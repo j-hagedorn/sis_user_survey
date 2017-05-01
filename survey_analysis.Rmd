@@ -379,7 +379,7 @@ The specific uses outlined in the next several sections identify promising areas
 
 ---
 
-## Use in Person-Centered Planning
+## Use in Person-Centered Planning {#use_pcp}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -679,7 +679,6 @@ Of all the potential uses of data from the SIS® assessment, this was one of the
 The chart below shows the number of respondents who indicated that the data from the assessment could be relevant for them in their current roles (i.e. they responded either *"Currently using in my role"* or *"Could be useful in my role"* to the specific item).
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# using a stacked bar chart with one bar for specific use and stacked by role, intended or potential uses by role
 
 use_um %>%
   group_by(short_desc,long_desc,when) %>%
@@ -875,6 +874,10 @@ Use of assessment outside of PCP process
 
 > *"Because there hasn’t been good guidance on what are we supposed to do now that we have the data, which leaves people to interpret it for themselves and develop grids which wrongly link a score to a specific service."*
 
+> *"The fear [of the SIS being used to cut services] sets people up to focus on the deficits. The reality is that some CMHs have used the SIS to cut services and while the department has addressed this, it remains the case."* 
+
+> *"Feel like you have to make people sound so bad off or negatively in order to secure the necessary services, when I want to talk positively about the progress that I’ve made."*
+
 ---
 
 # Related Issues
@@ -896,34 +899,9 @@ The use of standard assessment information is an innovation that is being implem
 
 It is worth noting that, during the focus groups, respondents did not draw a clear line between the official messaging provided by MDHHS and the informal messaging communicated within their own organizations or teams.  The issues with messaging noted here reflect individual perceptions rather than a comprehensive review of formal guidance to date.^[For instance, people acknowledged that multiple resources had been made available during the initial roll-out of the assessment.  One respondent noted that: *"The Department had trainers around the area, so there were presentations...there were quite a few of those"*  Nevertheless, a number of individuals were not aware of these resources and therefore noted a lack of clarity in messaging.]  Specific themes related to the ways in which people received and conveyed SIS messaging included:
 
-* **Usefulness in identifying goals and service planning**
-* **Usefulness to support equitable access to services**:  As noted in the [discussion above](#access), the interpretation of equity depends upon how it impacts one's individual experience.
-* **Lack of clarity around how data will be used**: 
-* Fear of use to decrease access to services 
-* Mandate without articulated value
-* Lack of clarity in how to integrate into PCP process during initial rollout
-* Lack of clarity around requirement of SIS
-
-
-> *"I would not want it to be used to cut services that are deemed to be necessary for my daughter’s support."*
-
-> *"Feel like you have to make people sound so bad off or negatively in order to secure the necessary services, when I want to talk positively about the progress that I’ve made."*
-
-> *"The fear [of the SIS being used to cut services] sets people up to focus on the deficits. The reality is that some CMHs have used the SIS to cut services and while the department has addressed this, it remains the case."*
-
-> *"Guardians come in and they’re comfortable with where their individual is at, so it becomes fear-based... We have to do a lot of comfort[ing] along the way to get people to participate. Sometimes the staff and myself will sit in on the assessment to protect older guardians from fear."*
-
-> *"My first thought as a consumer was, if I don’t do this, I might lose services, or not be able to be a peer mentor"*
-
-> *"Difficult to explain to my consumers when they’ve already had an assessment with me. Explained that everyone is doing this, your name just happened to be pulled"*
-
-> *"The state’s making us do it."*
-
-> *"Initially described as mandated… you wouldn’t receive services if you didn’t take it. Didn’t know that a person could opt out. The message that was sent out there was bye-bye CMH services."*
-
-
-
-
+* **Mandated requirement**: One of the most consistent messages identified by participants related to the SIS implementation was some variation of *"The state’s making us do it."*. While requirements are needed in order to guide a change toward consistent practice around assessment, the communication of this as the primary reason for implementation underscores the need for more champions with a clearly defined message regarding the value of the innovation. Participants noted a lack of clarity related to whether the SIS was required, and the implications for individuals who decline to take the assessment.
+* **Use in identifying goals and service planning**: Participants consistently identified [use of the data in person-centered planning](#use_pcp) as an intent of SIS implementation, though they noted various complexities with putting this into practice.  
+* **Use to support equitable access to services**:  Equity was one of the primary purposes identified as a rationale for .  As noted in the [discussion above](#access), the interpretation of equity depends upon how it impacts one's individual experience.  Accordingly, many participants stated that their initial exposure to the SIS tool had been accompanied by a fear that it would be used to decrease their access to services.  As one parent put it: *"I would not want it to be used to cut services that are deemed to be necessary for my daughter’s support."*
 
 ---
 
@@ -979,21 +957,23 @@ Overall, people's experience of the facilitation of the SIS assessment appeared 
 
 That being said, it is worth noting that the majority of respondents who had participated in a SIS assessment indicated that the results of the assessment were clear and that they had a better understanding of the person being assessed as a result.
 
-### Format of the SIS tool
+### Format of the SIS tool {#sis_format}
 
 Several issues related to the structure and format of the tool itself were raised repeatedly by participants.  Most of the issues noted here were part of a two-sided discussion, with some individuals noting difficulties of the format while others acknowledged an understanding of the reasons for these attributes of the assessment.
 
 * **The use of hypothetical questions**: The most common issue noted was the use of a hypothetical scenario to cue survey responses (i.e. *what supports would it take if you lived independently in the community?*).  This approach was noted to have the effect of raising discrepancies between individual or family hopes and the reality of the person's current situation.  In some instances this was perceived as empowering, while in others it was perceived as insulting.  The approach also impacts interpretation of the data, since a high level of need in a particular area of need may not be require allocation of resources if the person is not currently engaging that need *in the community*.
 * **Required to answer all questions**: Participants consistently mentioned the length of the assessment, which requires that all questions be answered.  The benefits of this approach are that it (*a*) allows for the collection of standardized data across all domains for each person assessed, and (*b*) prompts discussion regarding life areas where an individual and their supports may have different perceptions.  The downside of this approach was that questions were often felt to be irrelevant or uncomfortable and not adaptive to observable facts about the person (e.g. asking about certain medical needs).
-* **Focus on limitations**: While acknowledging the need for an assessment to identify needs in order to support the medical necessity of services, some participants were concerned that this deficit-based approach would increase as use of the data increased.  This was compounded by the existence of similar questions on other existing assessments. As one individual noted: *"We already know we can’t do stuff, why again with this?"* 
+* **Focus on limitations**: While acknowledging the need for an assessment to identify needs in order to support the medical necessity of services, some participants were concerned that this deficit-based approach would increase as use of the data increased.  This was compounded by the existence of similar questions on other existing assessments. As one individual noted: *"We already know we can’t do stuff, why again with this?"*.  
 * **Unclear summary/interpretation of output**: Participants noted that the summary output from the assessment was not especially informative at the individual level.  One person shared that *"the disconnect was when we got the results back, and said, how do we use these? ...there wasn’t a clear score, not sure of next steps."*  
 
 ### Response Burden
 
-Participants in 
-Time to complete
-Duplication of items from other assessments
+Participants indicated that the assessment was made challenging to complete based on the following factors: 
 
+* **Time to complete each assessment**: Based on the number of questions and other [aspects of the assessment tool](#sis_format), completion of individual assessments is a time-consuming process.  The process includes not only the time period of the SIS assessment itself, but scheduling time, travel time for attendees, documentation time and additional work hours needed to supplement productivity requirements for supports coordinators. 
+* **Duplication of items from other assessments**: The time invested in the assessment was compounded by the fact that many organizations have implemented the SIS assessment without eliminating duplicative questions from other assessments, which means that individuals and their families are often asked the same questions multiple times and that data related to their responses exists in both unstructured and structured formats which cannot be easily reconciled. 
+
+These issues impact the [time needed](#time) for implementation of the assessment and use of related data across the entire population.
 
 ---
 
@@ -1007,9 +987,11 @@ Duplication of items from other assessments
 
 ---
 
-## Relationship Between Stakeholder Groups {#groups}
+## Relationships Between Groups {#groups}
 
 Perception of assessment as indicating lack of trust in supports coordinators
+
+> *"Difficult to explain to my consumers when they’ve already had an assessment with me. Explained that everyone is doing this, your name just happened to be pulled"*
 
 ---
 
