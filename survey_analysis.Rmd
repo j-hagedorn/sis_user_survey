@@ -1,6 +1,7 @@
 ---
 title: "Person-Centered Measurement"
-author: Uses of Assessment Data to Inform Services for Individuals with Intellectual and Developmental Disabilities
+author: Uses of Assessment Data to Inform Services for Individuals with Intellectual
+  and Developmental Disabilities
 output:
   html_document:
     self_contained: no
@@ -175,13 +176,27 @@ use_groups <- read.csv("use_groups.csv")
 
 ```
 
+> **PLEASE NOTE THAT THIS PAPER IS CURRENTLY IN DRAFT FORM AND BEING REVIEWED**
+
 # Summary
 
-Feedback from stakeholders across the system
-Endorses use of SIS assessment data 
-List types of use
-Issues that impact implementation
-Caveats and inappropriate uses
+This paper is both a summary of feedback regarding the use of data from the *Supports Intensity Scale (SIS®)* and a white paper endorsing potential uses of the information in practice.  The content is a compilation of feedback from various [contributors](#contributors), including statewide focus groups, respondents to an online survey, and review by the Michigan Department of Health and Human Services (MDHHS).
+
+As the completion of the initial round of SIS® assessment draws near, questions remain about the opportunities for use of this information in practice.  This detailed dataset has applications for people in a number of different roles: *the Person receiving services, `r paste0(unique(sis_survey$role), collapse=", ")`, and more*.  Furthermore, each of these roles may have a different set of uses for the information.
+
+Several broad areas for use of the data were identified:
+
+* in [Person-Centered Planning](#use_pcp)
+* in [Provider Network Management](#use_manage)
+* to [Assure Service Access and Equity](#access)
+* to [Understand Population-level Needs](#use_pop)
+* in [Advocacy efforts](#use_advoc)
+
+While the specific application of the data should not engage in any of the [inappropriate uses](#inappropriate) which MDHHS has issued guidance on, the state endorses the use of assessment data to inform these areas.
+
+Contributors also identified additional issues that impact the implementation of this data in practice.  These issues include [communication](#communication), [aspects of the tool and related data](#aspects), the [timeline](#time) for completion, and [collaboration between groups](#groups).  Each of these issues has some bearing on how the data is interpreted and implemented as part of decision-making processes.
+
+
 Current state of implementation (Promise still in the process of being kept)
 
 ---
@@ -198,8 +213,8 @@ This document is intended to accomplish two objectives:
 * Provide guidance regarding potential uses of the data from the SIS® assessment tool by stakeholders in multiple roles throughout Michigan's behavioral health system.
 
 ---
-
-# Contributors
+ 
+# Contributors {#contributors}
 
 The guidance and thinking presented here is the result of substantial input from across the behavioral health system.  Contributions were made in the following ways...
 
@@ -325,7 +340,7 @@ Responses indicate that the most common use of SIS® data is to inform the indiv
 
 Certain uses of the assessment have been engaged more actively in respondents' current practice.  For example, the use of the information from the assessment to identify potential goals for person-centered planning had a greater number of respondents indicating *current* use than *potential* use.  On the other hand, many fewer respondents indicated that they were *currently* using the data to identify new locations to make services available, though a number of respondents endorsed this as a *potential* use.
 
-### Current uses of data by role
+### Current uses of data by role {#role}
 
 One of the principles informing the questions on the survey was that uses of the data could be meaningfully grouped by the role of the individual using the data.  For instance, while it would be inappropriate for a supports coordinator to use solely SIS data to determine medical necessity for an individual's services, it may be entirely appropriate for a provider network manager to use the data to explore whether there are enough services in a given area to meet the needs of the entire population served.  The *role* which is using the data, and the *use* to which it is put, matters.
 
@@ -742,9 +757,11 @@ Respondents from various roles acknowledged this tension when describing their c
 
 > *"There are conflicting mindsets that are trying to be balanced: We have this pot of money and we need to distribute it vs. we need to provide what is needed to the population."*
 
+The tension between access and equity is common in areas of life where individual use of a limited, shared resource may have unanticipated negative effects on the community as a whole (*i.e. areas which fit the economic description of the [tragedy of the unmanaged commons](https://en.wikipedia.org/wiki/Tragedy_of_the_commons)*). Fortunately, there are well-developed [principles for managing common resources](http://www.scielo.br/scielo.php?pid=S1414-753X2002000100002&script=sci_arttext#tabela1)^[Of particular relevance here is the work of the economist Elinor Ostrom, whose work providing practical pointers for managing common resources, such as: *(a) defining clear group boundaries, (b) matching rules governing use of common goods to specific needs and conditions, (c) making sure that those affected by the rules can participate in modifying them where possible, (d) developing a system which allows community members to monitoring other members' behavior, (e) providing accessible, low-cost means for resolving disputes*.] and these have been applied to the specific, regulated resources of [healthcare spending](http://www.rwjf.org/en/culture-of-health/2013/08/right_privilege_or.html)^[See, for instance: *Vickery KD, Sauser K, Davis MM.  Policy responses to demand for health care access: from the individual to the population.  JAMA.  2013;309:665-666.*] 
+
 ---
 
-## Use in Understanding Populations
+## Use in Understanding Populations {#use_pop}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -807,7 +824,7 @@ Specifically relevant in relation to the [Home and Community Based Services (HCB
 
 ---
 
-## Use in Advocacy
+## Use in Advocacy {#use_advoc}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -866,7 +883,7 @@ use_advoc %>%
 
 > *"The SIS... was brought up in a Fair Hearing, and it allowed to increase services. That’s an advocacy tool use. Went all the way up the chain with it."*
 
-## Inappropriate Uses
+## Inappropriate Uses {#inappropriate}
 
 Informing Service Availability
 Providing responses in a way which justifies authorizations
@@ -899,9 +916,11 @@ The use of standard assessment information is an innovation that is being implem
 
 It is worth noting that, during the focus groups, respondents did not draw a clear line between the official messaging provided by MDHHS and the informal messaging communicated within their own organizations or teams.  The issues with messaging noted here reflect individual perceptions rather than a comprehensive review of formal guidance to date.^[For instance, people acknowledged that multiple resources had been made available during the initial roll-out of the assessment.  One respondent noted that: *"The Department had trainers around the area, so there were presentations...there were quite a few of those"*  Nevertheless, a number of individuals were not aware of these resources and therefore noted a lack of clarity in messaging.]  Specific themes related to the ways in which people received and conveyed SIS messaging included:
 
-* **Mandated requirement**: One of the most consistent messages identified by participants related to the SIS implementation was some variation of *"The state’s making us do it."*. While requirements are needed in order to guide a change toward consistent practice around assessment, the communication of this as the primary reason for implementation underscores the need for more champions with a clearly defined message regarding the value of the innovation. Participants noted a lack of clarity related to whether the SIS was required, and the implications for individuals who decline to take the assessment.
+* **Mandated requirement**: One of the most consistent messages identified by participants related to the SIS implementation was some variation of *"The state’s making us do it."*. While requirements are needed in order to guide a change toward consistent practice around assessment, the communication of this as the primary reason for implementation underscores the need for more champions with a clearly defined message regarding the value of the innovation (*i.e. "This is why the state has prioritized this change...*). Participants also noted a lack of clarity related to whether the SIS was required, and the implications for individuals who decline to take the assessment.
 * **Use in identifying goals and service planning**: Participants consistently identified [use of the data in person-centered planning](#use_pcp) as an intent of SIS implementation, though they noted various complexities with putting this into practice.  
 * **Use to support equitable access to services**:  Equity was one of the primary purposes identified as a rationale for .  As noted in the [discussion above](#access), the interpretation of equity depends upon how it impacts one's individual experience.  Accordingly, many participants stated that their initial exposure to the SIS tool had been accompanied by a fear that it would be used to decrease their access to services.  As one parent put it: *"I would not want it to be used to cut services that are deemed to be necessary for my daughter’s support."*
+
+
 
 ---
 
@@ -987,11 +1006,19 @@ These issues impact the [time needed](#time) for implementation of the assessmen
 
 ---
 
-## Relationships Between Groups {#groups}
+## Collaboration Between Groups {#groups}
 
-Perception of assessment as indicating lack of trust in supports coordinators
+One of the most helpful aspects of the focus groups was that they brought individuals who experienced the SIS data from multiple vantage points into the same room together.  As [mentioned earlier](#roles), different people experience this information differently depending on the role they have in the behavioral health system.  This has important implications when it comes to implementing a broad-ranging change such as the use of standardized assessment data for the I/DD population.
 
-> *"Difficult to explain to my consumers when they’ve already had an assessment with me. Explained that everyone is doing this, your name just happened to be pulled"*
+While there are notable exceptions, people often choose to interact with others who have similar interests and values.^[In research, these interactions are referred to as *homophilous*, while those with different groups are called *heterophilous*. See: Rogers, Everett (2003). Diffusion of Innovations, 5th Edition. Simon and Schuster. p. 18]  It is often easier to interact with individuals with shared perspectives because they share a language and one can assume a similar set of goals. Truly diffusing a change across the broader system, however, requires engaging different groups and perspectives to introduce new ideas.  Without this productive exchange, it is easy for groups of people to become siloed and for the change process to stagnate.
+
+It can also lead to different perceptions regarding the purpose for a change.  One example which was raised multiple times during focus groups was the perception by supports coordinators that the SIS assessment indicated a lack of trust in their current assessments.
+
+> *"I feel like the SIS is coming behind me saying Oh, you missed a step. You weren’t thorough enough, so we’re going to give a stronger intensity scale of need."*
+
+From a skilled supports coordinator's point of view, the system-wide value of having a minimum standard of assessment may not be immediately clear.  However, when supports coordinators heard the usefulness of the data to other stakeholders (*e.g. to help new supports coordinators or support a standard of care*), they voiced a new appreciation of the value of the information.
+
+Continuing to engage a diverse set of stakeholders regarding the practical implementation of this and other related information will be critical to promoting trust while pursuing positive change.  This will require transparency in engaging challenging and often divisive topics to achieve commonly agreed-upon goals.
 
 ---
 
