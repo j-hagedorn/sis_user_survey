@@ -1,7 +1,7 @@
 ---
-title: "Person-Centered Measurement"
-author: Uses of Assessment Data to Inform Services for Individuals with Intellectual
-  and Developmental Disabilities
+title: "Uses of Assessment Data"
+author: to Inform Services and Supports for Individuals with Intellectual and Developmental
+  Disabilities
 output:
   html_document:
     self_contained: no
@@ -192,7 +192,7 @@ Several broad areas for use of the data were identified:
 * to [Understand Population-level Needs](#use_pop)
 * in [Advocacy efforts](#use_advoc)
 
-While the specific application of the data should not engage in any of the [inappropriate uses](#inappropriate) which MDHHS-BHDDA has issued guidance on, the state endorses the use of assessment data to inform these areas.
+While the specific application of the data should not engage in any of the [ways in which SIS® data cannot be used](#inappropriate) identified by MDHHS-BHDDA in published guidance, the state endorses the use of assessment data to inform these areas.
 
 Contributors also identified additional issues that impact the implementation of this data in practice.  These issues include [communication](#communication), [aspects of the tool and related data](#aspects), the [timeline](#time) for completion, and [collaboration between groups](#groups).  Each of these issues has some bearing on how the data is interpreted and implemented as part of decision-making processes.
 
@@ -265,12 +265,7 @@ The high response rate of program directors (n = `r n_distinct(sis_survey$Respon
 
 ## MDHHS Review
 
-The contents of this report have also been reviewed by key staff members within MDHHS-BHDDA, including:
-
-* Amy Peckinpaugh, *Department Analyst*
-* Other
-* Members 
-* Here
+The contents of this report have also been reviewed by key staff members within MDHHS-BHDDA administration and approved for distribution.
 
 ---
 
@@ -567,7 +562,7 @@ As one focus group member summarized:
 
 ---
 
-## Use in Managing a Provider Network {#use_manage}
+## Use in Benefit Management {#use_manage}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -627,7 +622,7 @@ use_prov %>%
 
 ```
 
-While the majority of survey respondents endorsed the assessment as having usefulness in managing and developing provider networks (*either current or potential*) across each of the areas indicated, a higher proportion marked these as *potential* uses, indicating that these applications of the data are not yet developed.
+While the majority of survey respondents endorsed the assessment as having usefulness in managing and developing a full array of benefits (*either current or potential*) across each of the areas indicated, a higher proportion marked these as *potential* uses, indicating that these applications of the data are not yet developed.
 
 This was echoed in focus group dialogues, such as the provider network manager who noted that:
 
@@ -645,7 +640,7 @@ The usefulness of a standardized assessment such as the SIS® to serve as a comm
 * Coordination of concurrent services across multiple providers
 * Transitions between supports coordinators (*e.g. due to employee turnover*)
 
-The statements below reinforce a growing body of [research](https://scholar.google.com/scholar?q=community+care+transitions) and [effort](https://www.medicaid.gov/medicaid/quality-of-care/improvement-initiatives/care-transitions/index.html) surrounding coordination and transitions of care:
+The statements below reinforce a growing [body of research](https://scholar.google.com/scholar?q=community+care+transitions) and [effort](https://www.medicaid.gov/medicaid/quality-of-care/improvement-initiatives/care-transitions/index.html) surrounding coordination and transitions of care:
 
 > *"They used to do SIS for all new intakes, and it was extremely helpful for supports coordinators..."*
 
@@ -892,11 +887,15 @@ use_advoc %>%
 
 > *"The SIS... was brought up in a Fair Hearing, and it allowed to increase services. That’s an advocacy tool use. Went all the way up the chain with it."*
 
-## Inappropriate Uses {#inappropriate}
+## Ways Data Cannot be Used {#inappropriate}
 
-Informing Service Availability
-Providing responses in a way which justifies authorizations
-Use of assessment outside of PCP process
+Since the initial implementation of the SIS assessment, MDHHS-BHDDA has clarified several uses of the data which are not permitted.^[Renwick, T. (2015, October 22). Inappropriate Use of Assessments and Screening Tools (Letter to PIHP Executive Directors).]  These are:
+
+* As an arbitrary methodology for determining the amount, scope, and duration of community living supports and skill building services implemented outside of a person-centered planning process.
+* As a means for achieving budget reductions.
+* As a process which supplants use of medical necessity criteria for evaluating the need for community living supports, skill building, and other supports and services.
+
+While these principles have been communicated in MDHHS-BHDDA guidance, focus group participants indicated concern that these inapproriate uses still occurred.  The quotes below indicate how this influences people's perceptions of the data and may even incentivize the presentation of individual needs during assessments.
 
 > *"Because there hasn’t been good guidance on what are we supposed to do now that we have the data, which leaves people to interpret it for themselves and develop grids which wrongly link a score to a specific service."*
 
@@ -925,7 +924,7 @@ The use of standard assessment information is an innovation that is being implem
 
 It is worth noting that, during the focus groups, respondents did not draw a clear line between the official messaging provided by MDHHS-BHDDA and the informal messaging communicated within their own organizations or teams.  The issues with messaging noted here reflect individual perceptions rather than a comprehensive review of formal guidance to date.^[For instance, people acknowledged that multiple resources had been made available during the initial roll-out of the assessment.  One respondent noted that: *"The Department had trainers around the area, so there were presentations...there were quite a few of those"*  Nevertheless, a number of individuals were not aware of these resources and therefore noted a lack of clarity in messaging.]  Specific themes related to the ways in which people received and conveyed this messaging included:
 
-* **Mandated requirement**: One of the most consistent messages identified by participants related to the SIS® implementation was some variation of *"The state’s making us do it."*. While requirements are needed in order to guide a change toward consistent practice around assessment, the communication of this as the primary reason for implementation underscores the need for more champions with a clearly defined message regarding the value of the innovation (*i.e. "This is why the state has prioritized this change...*). Participants also noted a lack of clarity related to whether the SIS® was required, and the implications for individuals who decline to take the assessment.
+* **Mandated requirement**: One of the most consistent messages identified by participants related to the SIS® implementation was some variation of *"The state’s making us do it."*. While requirements are needed in order to guide a change toward consistent practice around assessment, the communication of this as the primary reason for implementation underscores the need for more champions with a clearly defined message regarding the value of the innovation (*i.e. "This is why the state has prioritized this change...*). Participants also noted a lack of clarity related to whether the SIS® was required, and the implications for individuals who decline to take the assessment, despite guidance issued from MDHHS-BHDDA.^[See, for instance: Renwick, T. (2015, April 13).  Michigan Supports Intensity Scale (SIS) Implementation (Letter to PIHP Executive Directors).  This letter clarified that *"as with all assessments, the SIS is voluntary... Supports and services cannot be denied, reduced or discontinued if a consumer and/or the guardian refuse to cooperate with the assessment process."*]
 * **Use in identifying goals and service planning**: Participants consistently identified [use of the data in person-centered planning](#use_pcp) as an intent of SIS® implementation, though they noted various complexities with putting this into practice.  
 * **Use to support equitable access to services**:  Equity was one of the primary purposes identified as a rationale for implementing a standard assessment tool.  As noted in the [discussion above](#access), the interpretation of equity often depends upon how it impacts one's individual experience.  Accordingly, many participants stated that their initial exposure to the SIS® tool had been accompanied by a fear that it would be used to decrease their access to services.  As one parent put it: *"I would not want it to be used to cut services that are deemed to be necessary for my daughter’s support."*
 
