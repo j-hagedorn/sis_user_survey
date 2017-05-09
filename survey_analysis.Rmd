@@ -1,17 +1,17 @@
 ---
-title: "Person-Centered Measurement"
-author: Uses of Assessment Data to Inform Services for Individuals with Intellectual
-  and Developmental Disabilities
+title: "Uses of Assessment Data"
+author: to Inform Services and Supports for Individuals with Intellectual and Developmental
+  Disabilities
 output:
+  word_document:
+    toc: yes
+    toc_depth: '2'
   html_document:
     self_contained: no
     theme: flatly
     toc: yes
     toc_depth: 2
     toc_float: yes
-  word_document:
-    toc: yes
-    toc_depth: '2'
 always_allow_html: yes
 ---
 
@@ -180,7 +180,7 @@ use_groups <- read.csv("use_groups.csv")
 
 # Summary
 
-This paper is both a summary of feedback regarding the use of data from the *Supports Intensity Scale (SIS®)* and a white paper endorsing potential uses of the information in practice.  The content is a compilation of feedback from various [contributors](#contributors), including statewide focus groups, respondents to an online survey, and review by the Michigan Department of Health and Human Services (MDHHS-BHDDA).
+This paper is both a summary of feedback regarding the use of data from the *Supports Intensity Scale (SIS®)* and a white paper endorsing potential uses of the information in practice.  The content is a compilation of feedback from various [contributors](#contributors), including statewide focus groups, respondents to an online survey, and review by the Michigan Department of Health and Human Services Behavioral Health and Developmental Disabilities Administration (MDHHS-BHDDA).
 
 As the completion of the initial round of SIS® assessment draws near, questions remain about the opportunities for use of this information in practice.  This detailed dataset has applications for people in a number of different roles: *the Person receiving services, `r paste0(unique(sis_survey$role), collapse=", ")`, and more*.  Furthermore, each of these roles may have a different set of uses for the information.
 
@@ -192,7 +192,7 @@ Several broad areas for use of the data were identified:
 * to [Understand Population-level Needs](#use_pop)
 * in [Advocacy efforts](#use_advoc)
 
-While the specific application of the data should not engage in any of the [inappropriate uses](#inappropriate) which MDHHS-BHDDA has issued guidance on, the state endorses the use of assessment data to inform these areas.
+While the specific application of the data should not fall into any of the [specific ways in which SIS® data cannot be used](#inappropriate) (*identified by MDHHS-BHDDA in published guidance*) the department endorses the use of assessment data to inform each of the areas outlined here.
 
 Contributors also identified additional issues that impact the implementation of this data in practice.  These issues include [communication](#communication), [aspects of the tool and related data](#aspects), the [timeline](#time) for completion, and [collaboration between groups](#groups).  Each of these issues has some bearing on how the data is interpreted and implemented as part of decision-making processes.
 
@@ -221,15 +221,13 @@ The guidance and thinking presented here is the result of substantial input from
 
 A series of focus groups were scheduled throughout the state for individuals with intellectual and/or developmental disabilities, their family members, and their Supports Coordinators/Case Managers. The purpose of these focus groups was to understand people's current use of data from the SIS® and to understand how information gathered during the assessment might be used to inform the Person-Centered Planning process, ensuring that individuals receive supports and services according to their needs. 
 
-Four focus groups were offered at locations throughout the state (*in Detroit, Petoskey, Kalamazoo, and Mount Pleasant*) in order to reach a broad audience while minimizing travel time for attendees. [Focus group feedback](#focuscomments) was captured in notes taken during the groups and subsequently grouped into related themes to inform this paper.
-
-Participants in the Winter 2017 Self Determination Conference were also engaged in a focus group session and their responses are included here as well.
+Four focus groups were offered at locations throughout the state (*in Detroit, Petoskey, Kalamazoo, and Mount Pleasant*) in order to reach a broad audience while minimizing travel time for attendees. [Focus group feedback](#focuscomments) was captured in notes taken during the groups and subsequently grouped into related themes to inform this paper.  Participants in the Winter 2017 Self Determination Conference were also engaged in a focus group session and their responses are included here as well.
 
 A total of 133 people attended these focus groups.^[The attendance by site was as follows: *Detroit = 18, Kalamazoo = 20, Mount Pleasant = 17, Petoskey = 3, Self-Determination Conference = 75*]  Attendees included individuals receiving services, family members, advocates, peer mentors, supports coordinators, program directors, PIHP employees, SIS assessors, and others.^[While people from multiple roles and areas across the system were in attendance, there was a relatively low turn-out for individuals served and their family members. As the focus groups were intended to be the primary means of gathering personal feedback from persons served and their families, in lieu of the more formal survey, there is substantial value in continuing to engage people receiving services in discussions related to the uses of assessment data.]
 
 ## Survey
 
-[A survey](https://www.surveymonkey.com/r/Preview/?sm=O_2BNG1KDfFzgrTWySDftS7l01lFo5CEw11Po46B_2FKYGej_2FudfAYH_2BPr0I3SK4VNAg) was developed using *Survey Monkey* and sent by MDHHS-BHDDA staff via e-mail to each of the following groups on February 1, 2017:
+[An electronic survey](https://www.surveymonkey.com/r/Preview/?sm=O_2BNG1KDfFzgrTWySDftS7l01lFo5CEw11Po46B_2FKYGej_2FudfAYH_2BPr0I3SK4VNAg) was developed and sent by MDHHS-BHDDA staff via e-mail to each of the following groups on February 1, 2017:
 
 * Advocates and Advocacy Organizations
 * Habilitation Support Waiver Leads
@@ -259,18 +257,11 @@ sis_survey %>%
 
 By far, the largest role represented in the responses is Supports Coordinator (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Supports Coordinator"])`), followed by directors of programs for IDD (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Program Director"])`) and SIS® assessors (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "SIS Assessor or Quality Lead"])`).  All other roles had fewer than 10 responses.  
 
-Since Supports Coordinators are a crucial part of helping to translate an individual's assessed needs into a dialogue to inform person-centered planning and eventually authorizations for services, it is encouraging to have such a strong response in this area. 
-
-The high response rate of program directors (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Program Director"])`) is also encouraging, especially with regards to potential use of the assessment data to [manage networks of providers](#use_manage) and their programs.
+Since Supports Coordinators are a crucial part of helping to translate an individual's assessed needs into a dialogue to inform person-centered planning and eventually authorizations for services, it is encouraging to have such a strong response in this area. The high response rate of program directors (n = `r n_distinct(sis_survey$RespondentID[sis_survey$role == "Program Director"])`) is also encouraging, especially with regards to potential use of the assessment data to [manage networks of providers](#use_manage) and their programs.
 
 ## MDHHS Review
 
-The contents of this report have also been reviewed by key staff members within MDHHS-BHDDA, including:
-
-* Amy Peckinpaugh, *Department Analyst*
-* Other
-* Members 
-* Here
+The contents of this report have also been reviewed by key staff members within the MDHHS-BHDDA administration and approved for distribution.
 
 ---
 
@@ -502,13 +493,13 @@ sc_uses %>%
 
 ```
 
-Here we see that greater than 60% of supports coordinators responding to the survey use the SIS either *Never* or only *Occasionally* for any of the activities indicated here.  When asked why they did not use it more frequently, these respondents articulated a number of issues related to the usefulness of the tool and its integration into the existing PCP process which should prompt a thoughtful reconsideration of current practice.
+Here we see that over 60% of supports coordinators responding to the survey use the SIS® either *Never* or only *Occasionally* for any of the activities indicated here.  When asked why they did not use it more frequently, these respondents articulated a number of issues related to the usefulness of the tool and its integration into the existing PCP process which should prompt a thoughtful reconsideration of current practice.
 
-If one thinks of those who already using the assessment in the PCP process (i.e. those responding *Current*) as early adopters, the question for the broader system becomes how to spread the learning of that group to the rest of those who see the potential relevance of the tool (i.e. those responding *Potential*) and ultimately to demonstrate the usefulness of the assessment for those who did not originally see its potential (i.e. those who did not endorse either *Current* or *Potential* use).^[This is a common challenge with the implementation and   diffusion of any change, which is impacted by the nature of the innovation itself, communication related to the change, time, and a social system which supports the use of the innovation.]
+If one thinks of supports coordinators who are already using the assessment in the PCP process (i.e. those responding *Current*) as early adopters, the question for the broader system becomes how to spread the learning of that group to the rest of those who see the potential relevance of the tool (i.e. those responding *Potential*) and ultimately to demonstrate the usefulness of the assessment for those who did not originally see its potential (i.e. those who did not endorse either *Current* or *Potential* use).^[This is a common challenge with the implementation and diffusion of any change, which is impacted by aspects of the innovation itself, communication related to the change, time, and a social system which supports use of the innovation.]
 
 ### Considerations
 
-A number of helpful considerations were identified by focus group attendees during their dialogues.  These themes are summarized below.
+A number of helpful considerations related to this use of the data were identified by focus group attendees during their dialogues.  These themes are summarized below.
 
 #### Integration into Process
 
@@ -516,7 +507,7 @@ While the information from the assessment may have potential, making it useful i
 
 An integrated process would be one that:
 
-* _Summarizes relevant results_: Distills information from the assessment which is relevant to the individual person, rather than merely providing an abstract score (too little information) a list of all question responses (too much information).
+* _Summarizes relevant results_: Distills information from the assessment which is relevant to the individual person, rather than merely providing an abstract score (*too little information*) or a list of all question responses (*too much information*).
 * _Makes results available_: The information should be easily available to those involved in the PCP process in a timely manner.
 * _Honors individual choice_: The use of the information from the assessment should provide a meaningful set of options without automating the decision-making process or taking away individual control.
 
@@ -567,7 +558,7 @@ As one focus group member summarized:
 
 ---
 
-## Use in Managing a Provider Network {#use_manage}
+## Use in Benefit Management {#use_manage}
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -582,13 +573,13 @@ use_prov <-
 
 ### Specific Types of Use
 
-Tailoring services to the needs of a specific individual is a hallmark of person-centered planning, but there is an additional level of complexity required to support the design of provider networks to meet the precise needs of the populations they serve.  Assessment data from the SIS® has been identified as having potential applications for the following activities related to provider network management:
+Tailoring services to the needs of a specific individual is a hallmark of person-centered planning, but there is an additional level of complexity required to support the design of provider networks to meet the precise needs of the populations they serve.  Assessment data from the SIS® has been identified as having potential applications for the following activities related to benefit management:
 
 * Inform the development of provider network service offerings. 
 * Evaluate provider network adequacy relative to the specific needs of the population in a given area.         
 * Identify locations to make services available for individuals within an accessible distance from their homes.
 * Forecast needs for services not yet available. 
-* Provide consistent guidance to service providers related to the scope, duration and intensity of services authorized by the IPOS.
+* Provide consistently-formatted guidance to service providers related to the scope, duration and intensity of services authorized by the IPOS.
 * Assist providers to develop an enhanced array of services to support compliance with the HCBS Final Rule.
 
 ### Current and Potential Usage
@@ -627,7 +618,7 @@ use_prov %>%
 
 ```
 
-While the majority of survey respondents endorsed the assessment as having usefulness in managing and developing provider networks (*either current or potential*) across each of the areas indicated, a higher proportion marked these as *potential* uses, indicating that these applications of the data are not yet developed.
+While the majority of survey respondents endorsed the assessment as having usefulness in managing and developing a full array of benefits (*either current or potential*) across each of the areas indicated, a higher proportion marked these as *potential* uses, indicating that these applications of the data are not yet developed.
 
 This was echoed in focus group dialogues, such as the provider network manager who noted that:
 
@@ -645,7 +636,7 @@ The usefulness of a standardized assessment such as the SIS® to serve as a comm
 * Coordination of concurrent services across multiple providers
 * Transitions between supports coordinators (*e.g. due to employee turnover*)
 
-The statements below reinforce a growing body of [research](https://scholar.google.com/scholar?q=community+care+transitions) and [effort](https://www.medicaid.gov/medicaid/quality-of-care/improvement-initiatives/care-transitions/index.html) surrounding coordination and transitions of care:
+The statements below reinforce a growing [body of research](https://scholar.google.com/scholar?q=community+care+transitions) and [effort](https://www.medicaid.gov/medicaid/quality-of-care/improvement-initiatives/care-transitions/index.html) surrounding coordination and transitions of care:
 
 > *"They used to do SIS for all new intakes, and it was extremely helpful for supports coordinators..."*
 
@@ -661,7 +652,7 @@ A number of participants noted that their personal messaging to clients regardin
 
 At the current time, however, many provider networks have not yet evolved to incorporate this information into how they develop services and supports, and this can lead to frustration for individuals receiving services:
 
-> *"People ask,* How might that help me? *with questions related to job services, for example, when there are no services available"*
+> *"People ask, 'How might that help me?' with questions related to job services, for example, when there are no services available"*
 
 It will be important to continue to share ways in which individual needs and interests are being considered to shape a more responsive array of services.
 
@@ -886,17 +877,21 @@ use_advoc %>%
 
 ```
 
-### Considerations
+Advocates and others identified an array of potential uses of the data for advocacy purposes, both at the individual level and the population level:
 
 > *"We advocate for individuals with I/DD, [and] while we don’t typically sit in on SIS, it helps us to articulate and understand their situation"*
 
 > *"The SIS... was brought up in a Fair Hearing, and it allowed to increase services. That’s an advocacy tool use. Went all the way up the chain with it."*
 
-## Inappropriate Uses {#inappropriate}
+## Ways Data Cannot be Used {#inappropriate}
 
-Informing Service Availability
-Providing responses in a way which justifies authorizations
-Use of assessment outside of PCP process
+Since the initial implementation of the SIS® assessment, MDHHS-BHDDA has clarified several uses of the resulting data which are not permitted.^[Renwick, T. (2015, October 22). Inappropriate Use of Assessments and Screening Tools (Letter to PIHP Executive Directors).]  These are:
+
+* As an arbitrary methodology for determining the amount, scope, and duration of community living supports and skill building services implemented outside of a person-centered planning process.
+* As a means for achieving budget reductions.
+* As a process which supplants use of medical necessity criteria for evaluating the need for community living supports, skill building, and other supports and services.
+
+While these principles have been communicated in MDHHS-BHDDA guidance, focus group participants indicated concern that these inapproriate uses still occurred.  The quotes below indicate how this influences people's perceptions of the data and may even incentivize the presentation of individual needs during assessments.
 
 > *"Because there hasn’t been good guidance on what are we supposed to do now that we have the data, which leaves people to interpret it for themselves and develop grids which wrongly link a score to a specific service."*
 
@@ -925,7 +920,7 @@ The use of standard assessment information is an innovation that is being implem
 
 It is worth noting that, during the focus groups, respondents did not draw a clear line between the official messaging provided by MDHHS-BHDDA and the informal messaging communicated within their own organizations or teams.  The issues with messaging noted here reflect individual perceptions rather than a comprehensive review of formal guidance to date.^[For instance, people acknowledged that multiple resources had been made available during the initial roll-out of the assessment.  One respondent noted that: *"The Department had trainers around the area, so there were presentations...there were quite a few of those"*  Nevertheless, a number of individuals were not aware of these resources and therefore noted a lack of clarity in messaging.]  Specific themes related to the ways in which people received and conveyed this messaging included:
 
-* **Mandated requirement**: One of the most consistent messages identified by participants related to the SIS® implementation was some variation of *"The state’s making us do it."*. While requirements are needed in order to guide a change toward consistent practice around assessment, the communication of this as the primary reason for implementation underscores the need for more champions with a clearly defined message regarding the value of the innovation (*i.e. "This is why the state has prioritized this change...*). Participants also noted a lack of clarity related to whether the SIS® was required, and the implications for individuals who decline to take the assessment.
+* **Mandated requirement**: One of the most consistent messages identified by participants related to the SIS® implementation was some variation of *"The state’s making us do it."*  While requirements are needed in order to guide a change toward consistent practice around assessment, the communication of this as the primary reason for implementation underscores the need for more champions with a clearly defined message regarding the value of the innovation (*i.e. "This is why the state has prioritized this change...*). Participants also noted a lack of clarity related to whether the SIS® was required, and the implications for individuals who decline to take the assessment, despite guidance issued from MDHHS-BHDDA.^[See, for instance: Renwick, T. (2015, April 13).  Michigan Supports Intensity Scale (SIS) Implementation (Letter to PIHP Executive Directors).  This letter clarified that *"as with all assessments, the SIS is voluntary... Supports and services cannot be denied, reduced or discontinued if a consumer and/or the guardian refuse to cooperate with the assessment process."*]
 * **Use in identifying goals and service planning**: Participants consistently identified [use of the data in person-centered planning](#use_pcp) as an intent of SIS® implementation, though they noted various complexities with putting this into practice.  
 * **Use to support equitable access to services**:  Equity was one of the primary purposes identified as a rationale for implementing a standard assessment tool.  As noted in the [discussion above](#access), the interpretation of equity often depends upon how it impacts one's individual experience.  Accordingly, many participants stated that their initial exposure to the SIS® tool had been accompanied by a fear that it would be used to decrease their access to services.  As one parent put it: *"I would not want it to be used to cut services that are deemed to be necessary for my daughter’s support."*
 
@@ -987,19 +982,19 @@ That being said, it is worth noting that even in these areas the majority of res
 
 ### Format of the tool {#sis_format}
 
-Several issues related to the structure and format of the tool itself were raised repeatedly by participants.  Most of the issues noted here were part of a two-sided discussion, with some individuals noting difficulties of the format while others acknowledged an understanding of the reasons for these attributes of the assessment.
+Several considerations related to the structure and format of the tool itself were raised repeatedly by participants, specifically regarding the ways in which these impacted their experience of the assessment process and their understanding of the resulting data.  Most of the issues noted here were part of a balanced discussion among participants, with some individuals noting difficulties of the format while others acknowledged an understanding of the reasons for these attributes of the assessment.
 
-* **The use of hypothetical questions**: The most common issue noted was the use of a hypothetical scenario to cue survey responses (i.e. *what supports would it take if you lived independently in the community?*).  This approach was noted to have the effect of raising discrepancies between individual or family hopes and the reality of the person's current situation.  In some instances this was perceived as empowering, while in others it was perceived as insulting.  The approach also impacts interpretation of the data, since a high level of need in a particular area of need may not be require allocation of resources if the person is not currently engaging that need *in the community*.
-* **Required to answer all questions**: Participants consistently mentioned the length of the assessment, which requires that all questions be answered.  The benefits of this approach are that it (*a*) allows for the collection of standardized data across all domains for each person assessed, and (*b*) prompts discussion regarding life areas where an individual and their supports may have different perceptions.  The downside of this approach was that questions were often felt to be irrelevant or uncomfortable and not adaptive to observable facts about the person (e.g. asking about certain medical needs).
-* **Focus on limitations**: While acknowledging the need for an assessment to identify needs in order to support the medical necessity of services, some participants were concerned that this deficit-based approach would increase as use of the data increased.  This was compounded by the existence of similar questions on other existing assessments. As one individual noted: *"We already know we can’t do stuff, why again with this?"*.  
+* **The use of hypothetical questions**: The most common issue noted was the use of a hypothetical scenario to cue survey responses (i.e. *what supports would it take if you lived independently in the community?*).  This approach was noted to have the effect of raising discrepancies between individual or family hopes and the reality of the person's current situation.  In some instances this was perceived as empowering, while in other instances it was perceived as insulting by family members.  The hypothetical format also impacts interpretation of the data, since a high level of need in a particular life area may not be require allocation of resources if the person is not currently engaging that need *in the community*.
+* **Required to answer all questions**: Participants consistently mentioned the considerable length of the assessment, which requires that all questions be answered.  The benefits of this approach are that it (*a*) allows for the collection of standardized data across all life areas for each person assessed, and (*b*) prompts discussion regarding life areas where an individual and their supports may have different perceptions.  The downside of this approach was that questions were sometimes felt to be irrelevant or uncomfortable and the assessment was not adaptive to observable facts about the person (*e.g. asking about certain medical needs*).
+* **Focus on limitations**: While acknowledging the need for an assessment to identify needs in order to support the medical necessity of services, some participants were concerned that a deficit-based approach would increase as use of the data increased.  This focus on limitations was compounded by the existence of similar questions on other existing assessments. As one individual noted: *"We already know we can’t do stuff, why again with this?"*.  
 * **Unclear summary/interpretation of output**: Participants noted that the summary output from the assessment was not especially informative at the individual level.  One person shared that *"the disconnect was when we got the results back, and said, how do we use these? ...there wasn’t a clear score, not sure of next steps."*  
 
 ### Response Burden {#burden}
 
 Participants indicated that the assessment was challenging to complete based on the following factors: 
 
-* **Time to complete each assessment**: Based on the number of questions and other [aspects of the assessment tool](#sis_format), completion of individual assessments is a time-consuming process.  The process includes not only the time period of the assessment interview itself, but scheduling time, travel time for attendees, documentation time and additional work hours needed to supplement productivity requirements for supports coordinators. 
-* **Duplication of items from other assessments**: The time invested in the assessment was compounded by the fact that many organizations have implemented the assessment without eliminating duplicative questions from other assessments, which means that individuals and their families are often asked the same questions multiple times and that data related to their responses exists in both unstructured and structured formats which cannot be easily reconciled. 
+* **Time to complete each assessment**: Based on the number of questions and other [aspects of the assessment tool](#sis_format), completion of individual assessments is a time-consuming process.  The process includes not only the time period of the assessment interview itself, but time required for scheduling, travel for attendees, documentation and additional work hours needed to supplement productivity requirements for supports coordinators. 
+* **Duplication of items from other assessments**: The time invested in the assessment was compounded by the fact that many organizations have implemented the assessment without eliminating duplicative questions from other assessments, which means that individuals and their families are often asked similar questions multiple times and that data related to their responses exists in both unstructured and structured formats which cannot be easily reconciled. 
 
 These issues impact the [time needed](#time) for implementation of the assessment and use of related data across the entire population.
 
@@ -1097,6 +1092,13 @@ sis_focus %>%
 
 ```
 
+---
+
+# Authors
+
+Supported by: [![](MDHHS-logo.jpg)](http://www.michigan.gov/mdhhs/0,5885,7-339-71550_2941-146590--,00.html)
+
+With analysis by: [![](tbds-logo.png)](www.tbdsolutions.com)
 
                                        
 
