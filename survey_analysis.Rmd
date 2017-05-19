@@ -3,15 +3,15 @@ title: "Uses of Assessment Data"
 author: to Inform Services and Supports for Individuals with Intellectual and Developmental
   Disabilities
 output:
+  word_document:
+    toc: yes
+    toc_depth: '2'
   html_document:
     self_contained: no
     theme: flatly
     toc: yes
     toc_depth: 2
     toc_float: yes
-  word_document:
-    toc: yes
-    toc_depth: '2'
 always_allow_html: yes
 ---
 
@@ -176,7 +176,6 @@ use_groups <- read.csv("use_groups.csv")
 
 ```
 
-> **PLEASE NOTE THAT THIS PAPER IS CURRENTLY IN DRAFT FORM AND BEING REVIEWED BY MDHHS-BHDDA**
 
 # Summary
 
@@ -187,7 +186,7 @@ As the completion of the initial round of SIS® assessment draws near, questions
 Several broad areas for use of the data were identified:
 
 * in [Person-Centered Planning](#use_pcp)
-* in [Provider Network Management](#use_manage)
+* in [Benefit Management](#use_manage)
 * to [Assure Service Access and Equity](#access)
 * to [Understand Population-level Needs](#use_pop)
 * in [Advocacy efforts](#use_advoc)
