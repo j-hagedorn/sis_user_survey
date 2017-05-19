@@ -3,15 +3,15 @@ title: "Uses of Assessment Data"
 author: to Inform Services and Supports for Individuals with Intellectual and Developmental
   Disabilities
 output:
-  word_document:
-    toc: yes
-    toc_depth: '2'
   html_document:
     self_contained: no
     theme: flatly
     toc: yes
     toc_depth: 2
     toc_float: yes
+  word_document:
+    toc: yes
+    toc_depth: '2'
 always_allow_html: yes
 ---
 
