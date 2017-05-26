@@ -1,7 +1,6 @@
 ---
 title: "Uses of Assessment Data"
-author: to Inform Services and Supports for Individuals with Intellectual and Developmental
-  Disabilities
+author: to Inform Services and Supports for Individuals with Intellectual and Developmental Disabilities
 output:
   html_document:
     self_contained: no
@@ -249,7 +248,7 @@ sis_survey %>%
           text = ~paste(n," respondents identified their role as <br>",
                         role)) %>% 
   add_bars() %>% 
-  layout(margin = list(b = 150),
+  layout(margin = list(b = 150,r = 80),
          xaxis = list(title = "", tickangle = 45),
          yaxis = list(title = "Respondents in this role"))
 ```
@@ -366,8 +365,8 @@ by_role %>%
     limits = c(0, 100)
   )%>% 
   layout(
-    margin = list(l = 170, b = 150),
-    xaxis = list(title = "Role", tickangle = 45),
+    margin = list(l = 190, b = 150),
+    xaxis = list(title = "", tickangle = 45),
     yaxis = list(title = "Type of Use")
   )
 
